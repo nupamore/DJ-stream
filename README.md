@@ -66,8 +66,13 @@ str = `test ${ x }`
 ``` js
 let camelCase
 // 전역 상수
-const UPPER_UNDER = 5000
+const UPPER_UNDER
 // 생성자
+const Person
+```
+
+- 생성자
+``` js
 const Person = ( name ) => {
 	// private
 	let _name = name
@@ -83,6 +88,7 @@ const Person = ( name ) => {
 	}
 }
 ```
+
 ---
 ### 3. 주석  
 docblockr 패키지 사용  
