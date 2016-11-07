@@ -1,5 +1,4 @@
-# DJ-stream
-Coding convention
+# DJ-stream Coding convention
 
 
 
