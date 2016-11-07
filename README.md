@@ -1,6 +1,8 @@
 # DJ-stream
 Coding convention
 
+
+
 ### 1. 가독성
 - 세미콜론 생략
 
@@ -24,8 +26,8 @@ if( a > f(b, c) )
 ``` js
 // no
 result = f( {
-				   key: value
-				 } )
+		key: value
+	} )
 // no
 result = f({ key: value })
 
