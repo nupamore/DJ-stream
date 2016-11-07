@@ -25,8 +25,8 @@ if( a > f(b, c) )
 ``` js
 // no
 result = f( {
-		key: value
-	} )
+			key: value
+		} )
 // no
 result = f({ key: value })
 
