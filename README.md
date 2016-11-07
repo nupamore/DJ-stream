@@ -4,7 +4,7 @@
 - 세미콜론 생략
 
 - var 금지  
-const, let 사용
+const, let 사용  
 let의 사용을 줄일 것
 
 - 여백 필수  
