@@ -68,8 +68,19 @@ let camelCase
 // 전역 상수
 const UPPER_UNDER = 5000
 // 생성자
-const Person = () => {
-	/* */
+const Person = ( name ) => {
+	// private
+	let _name = name
+	
+	// public
+	return {
+		set name( str ){
+			_name = str
+		},
+		get familyName(){
+			return _name.split(' ')[0]
+		},
+	}
 }
 ```
 ---
