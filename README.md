@@ -1,6 +1,6 @@
 # DJ-stream Coding convention
 
-
+<br>
 
 ### 1. 가독성
 - 세미콜론 생략
@@ -66,7 +66,8 @@ const User = require('../class/User.js')
 let start
 ```
 
----
+
+<br>
 
 ### 2. 변수 선언
 
@@ -110,7 +111,7 @@ class Person
 	- 절대 외부에서 멤버변수로 직접 접근하지 말 것
 
 ``` js
-module.exports = class User {
+class User {
 	constructor( name ){
 		this._name = name
 	}
@@ -125,7 +126,9 @@ module.exports = class User {
 }
 ```
 
----
+
+<br>
+
 ### 3. 주석  
 - `docblockr` 패키지 사용  
 - 모든 함수에 주석을 달아줄 것  
@@ -165,7 +168,10 @@ class User {
 	}
 }
 ```
----
+
+
+<br>
+
 ### 4. 파일 관리  
 - 클래스 하나에 한 파일을 할당  
 - 외부모듈을 추가할 경우 `npm --save` 옵션을 사용하고 `package.json` 을 커밋
@@ -196,6 +202,9 @@ dev/
 |--package.json
 ```
 
----
+
+
+<br>
+
 기타사항은 전체적으로 아래 링크를 따를 것  
 https://github.com/tipjs/javascript-style-guide
