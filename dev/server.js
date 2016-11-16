@@ -1,17 +1,34 @@
 
-// node_modules
+// modules
 const express = require('express')
-
-
-// express setup
 const app = express()
-app.use( express.static(__dirname + '/view') )
+const http = require('http').Server( app )
+const socket = require('./socket.js')
+
+
+// express static
+app.use( express.static(`${ __dirname }/view`) )
+app.use( '/lib', [
+  express.static( `${ __dirname }/node_modules/jquery/dist` ),
+  express.static( `${ __dirname }/node_modules/material-design-lite` ),
+  express.static( `${ __dirname }/node_modules/vue/dist` ),
+  express.static( `${ __dirname }/node_modules/p5/lib` ),
+  express.static( `${ __dirname }/node_modules/socket.io-client` ),
+])
 
 // express router
-app.use( '/main', require('./router/main.js') )
+app.use( require('./router/join.js') )
+app.use( require('./router/login.js') )
+app.use( require('./router/follow.js') )
+app.use( require('./router/support.js') )
+app.use( require('./router/user.js') )
+app.use( require('./router/wave.js') )
 
-
+// express open
 const port = 80;
-app.listen( port, () => {
+http.listen( port, () => {
   console.log( `Server running at ${ port }` )
 })
+
+// socket open
+socket.listen( http )

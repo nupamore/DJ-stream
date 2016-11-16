@@ -55,12 +55,9 @@ arr.map()
 
 
 ``` js
-// node_modules
+// modules
 const express = require('express')
 const bodyParser = require('body-parser')
-
-// class
-const User = require('../class/User.js')
 
 
 let start
@@ -183,7 +180,7 @@ dev/
 |  |--js/
 |  |--css/
 |  |--img/
-|  |--main.html
+|  |--index.html
 |
 |--files/
 |  |--test.mp3
@@ -193,12 +190,10 @@ dev/
 |--custom_modules/
 |
 |--router/
-|  |--main.js
-|
-|--class/
-|  |--User.js
+|  |--user.js
 |
 |--server.js
+|--socket.js
 |--package.json
 ```
 

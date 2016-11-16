@@ -1,9 +1,18 @@
 {
+  "//": [
+    "mdl의 dist폴더가 60MB이므로 지우는게 좋을 듯"
+  ],
   "name": "djstream",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "dependencies": {
     "body-parser": "^1.15.2",
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "jquery": "^3.1.1",
+    "material-design-lite": "^1.2.1",
+    "p5": "^0.5.4",
+    "socket.io": "^1.5.1",
+    "socket.io-client": "^1.5.1",
+    "vue": "^2.0.6"
   }
 }
