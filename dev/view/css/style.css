@@ -3,16 +3,35 @@
   mdl overide
 */
 .mdl-layout__header-row {
-  max-width: 900px;
-  width: 100%;
   padding: 0;
-  margin: auto;
 }
 
 .mdl-layout__content {
-  max-width: 900px;
+  overflow: visible;
+}
+
+.mdl-grid {
+  margin: 4px;
+  padding: 4px;
+}
+
+.mdl-card {
   width: 100%;
-  margin: auto;
+  min-height: 10px;
+}
+@media (min-width: 600px) {
+  .mdl-card {
+    width: 100%;
+    min-height: 200px;
+  }
+}
+
+.mdl-card__title {
+  height: 100%;
+  color: #FFF;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 
@@ -21,6 +40,8 @@
 */
 .max-width {
   max-width: 900px;
+  width: 100%;
+  margin: auto;
 }
 
 .img-responsive {
@@ -37,20 +58,68 @@
 }
 
 div.space {
-  height: 10px;
+  margin: 10px;
 }
 span.space {
   width: 10px;
 }
 
 .card-square.mdl-card {
-  width: 100%;
   height: 250px;
 }
 
-.card-square > .mdl-card__title {
-  color: #FFF;
-  background-size: 100% auto;
-  background-repeat: no-repeat;
-  background-position: center;
+@media (min-width: 600px) {
+  .card-img {
+    width: 100%;
+    min-height: 200px;
+  }
+}
+
+
+/*
+  search-field
+*/
+#search-field {
+  position: absolute;
+  right: 16px;
+}
+#search-field input[type=text] {
+  text-align: center;
+}
+
+
+/*
+  main
+*/
+#main {
+  margin-top: -14px;
+}
+#main .card-square.mdl-card {
+  height: 250px;
+}
+#main .mdl-card__title-text {
+  color: rgb(28, 98, 181);
+  height: 30px;
+  overflow: hidden;
+}
+#main .mdl-card__supporting-text {
+  height: 100px;
+  overflow: hidden;
+}
+#main .mdl-card__dt-text {
+  float: right;
+}
+
+
+/*
+  search-result
+*/
+#search-result {
+  margin-top: 50px;
+}
+#search-result .search-title {
+  color: rgb(28, 98, 181);
+}
+#search-result .mdl-card__supporting-text.search-text {
+  padding: 0px;
 }

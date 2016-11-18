@@ -21,52 +21,130 @@
 
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
   <!-- header -->
   <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
+    <div class="mdl-layout__header-row max-width">
+
       <!-- title -->
-      <h1 class="mdl-layout-title"> {{ text.title }} </h1>
+      <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
+      <h1 class="mdl-layout-title">
+        {{ text.title }}
+      </h1>
       <div class="mdl-layout-spacer"></div>
-      <!-- user info -->
+
+      <!-- user nav -->
       <nav class="mdl-navigation mdl-layout--large-screen-only">
         <img class="user-icon" :src=" user.img ">
-        <a class="mdl-navigation__link" href=""> {{ text.mypage }} </a>
-        <a class="mdl-navigation__link" href=""> {{ text.logout }} </a>
+        <a class="mdl-navigation__link" href="">
+          {{ text.mypageButton }}
+        </a>
+        <a class="mdl-navigation__link" href="">
+          {{ text.logoutButton }}
+        </a>
       </nav>
+
     </div>
   </header>
   <header class="mdl-layout__drawer mdl-layout--small-screen-only">
-    <!-- user info -->
+
+    <!-- user nav -->
     <nav class="mdl-navigation">
       <img class="user-icon" :src=" user.img ">
       <div class="space"></div>
-      <a class="mdl-navigation__link" href=""> {{ text.mypage }} </a>
-      <a class="mdl-navigation__link" href=""> {{ text.logout }} </a>
+      <a class="mdl-navigation__link" href="">
+        {{ text.mypageButton }}
+      </a>
+      <a class="mdl-navigation__link" href="">
+        {{ text.logoutButton }}
+      </a>
     </nav>
+
   </header>
   <!-- end header -->
 
+
   <!-- content -->
-  <section class="mdl-layout__content">
-    <!-- waves -->
-    <div class="mdl-grid" v-for=" dj in user.following ">
+  <section class="mdl-layout__content max-width">
+
+    <!-- search field -->
+    <form id="search-field" action="#">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+        <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" id="search" v-model=" searchKeyword " @keyup=" search(searchKeyword) ">
+          <label class="mdl-textfield__label" for="sample-expandable">Expandable Input</label>
+        </div>
+      </div>
+    </form>
+    <!-- end search field -->
+
+
+    <!-- main -->
+    <div id="main" class="mdl-grid" v-for=" dj in user.following " v-if=" page == '/main' ">
+
       <div class="mdl-cell mdl-cell--12-col">
         <h5> {{ dj.name }} </h5>
       </div>
+
       <div class="mdl-cell mdl-cell--4-col" v-for=" wave in dj.waves ">
         <div class="card-square mdl-card mdl-shadow--2dp">
-          <div class="mdl-card__title mdl-card--expand" :style=" `background-image: url(${ wave.img })` ">
-            <h2 class="mdl-card__title-text"> {{ wave.title }} </h2>
-          </div>
+          <div class="mdl-card__title mdl-card--expand" :style=" `background-image: url(${ wave.img })` "></div>
+
           <div class="mdl-card__supporting-text">
+            <div class="mdl-card__title-text">
+              {{ wave.title }}
+            </div>
+            <span class="mdl-card__dt-text">
+              {{ wave.dt }}
+            </span>
             {{ wave.desc }}
           </div>
         </div>
       </div>
+
     </div>
+    <!-- end main -->
+
+
+    <!-- search result -->
+    <div id="search-result" class="mdl-grid" v-if=" page == '/search' ">
+
+      <!-- waves -->
+      <div class="mdl-cell mdl-cell--12-col" v-for=" wave in searchResult ">
+        <div class="mdl-card mdl-shadow--2dp">
+          <div class="mdl-grid">
+
+            <div class="mdl-cell mdl-cell--5-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
+              <div class="mdl-card__title card-img mdl-card--expand" :style=" `background-image: url(${ wave.img })` "></div>
+            </div>
+            <div class="mdl-cell mdl-cell--7-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
+              <div class="mdl-card__title-text search-title">
+                {{ wave.title }}
+              </div>
+              <div class="mdl-card__supporting-text search-text">
+                {{ wave.dj }}디제이
+              </div>
+              <div class="mdl-card__supporting-text search-text">
+                {{ wave.dt }}
+              </div>
+              <div class="space"></div>
+              <div class="mdl-card__supporting-text search-text">
+                {{ wave.desc }}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- end search result -->
   </section>
-  <!-- content end -->
+  <!-- end content -->
+
 </div>
 </body>
 
