@@ -6,10 +6,6 @@
   padding: 0;
 }
 
-.mdl-layout__content {
-  overflow: visible;
-}
-
 .mdl-grid {
   margin: 4px;
   padding: 4px;
@@ -49,7 +45,7 @@
   height: auto;
 }
 
-.user-icon {
+.img-icon {
   max-width: 70%;
   max-height: 70%;
   height: auto;
@@ -73,6 +69,45 @@ span.space {
     width: 100%;
     min-height: 200px;
   }
+}
+
+
+/*
+  intro
+*/
+#intro {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: #EEE;
+  z-index: 999;
+}
+#intro > div {
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  text-align: center;
+}
+#intro .content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10vh;
+}
+#intro button {
+  display: block;
+  margin: 5px auto;
+}
+
+
+/*
+  content
+*/
+#content {
+  overflow: visible;
 }
 
 

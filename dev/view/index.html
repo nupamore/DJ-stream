@@ -22,6 +22,28 @@
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
+  <!-- intro -->
+  <section id="intro">
+    <div>
+      <img src="/img/logo.png" class="img-icon">
+
+      <div class="content">
+        <p>
+          {{ text.introMessage }}
+        </p>
+        <button class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click=" closeIntro() ">
+          {{ text.loginButton }}
+        </button>
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect" @click=" closeIntro() ">
+          {{ text.guestButton }}
+        </button>
+      </div>
+
+    </div>
+  </section>
+  <!-- end intro -->
+
+
   <!-- header -->
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row max-width">
@@ -35,7 +57,7 @@
 
       <!-- user nav -->
       <nav class="mdl-navigation mdl-layout--large-screen-only">
-        <img class="user-icon" :src=" user.img ">
+        <img class="img-icon" :src=" user.img ">
         <a class="mdl-navigation__link" href="">
           {{ text.mypageButton }}
         </a>
@@ -50,7 +72,7 @@
 
     <!-- user nav -->
     <nav class="mdl-navigation">
-      <img class="user-icon" :src=" user.img ">
+      <img class="img-icon" :src=" user.img ">
       <div class="space"></div>
       <a class="mdl-navigation__link" href="">
         {{ text.mypageButton }}
@@ -65,26 +87,25 @@
 
 
   <!-- content -->
-  <section class="mdl-layout__content max-width">
+  <section id="content" class="mdl-layout__content max-width">
 
     <!-- search field -->
-    <form id="search-field" action="#">
+    <div id="search-field">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-        <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+        <label class="mdl-button mdl-js-button mdl-button--icon" for="searchKeyword">
           <i class="material-icons">search</i>
         </label>
         <div class="mdl-textfield__expandable-holder">
-          <input class="mdl-textfield__input" type="text" id="search" v-model=" searchKeyword " @keyup=" search(searchKeyword) ">
+          <input class="mdl-textfield__input" type="text" id="searchKeyword" name="k" v-model=" searchKeyword " @keyup=" search(searchKeyword) ">
           <label class="mdl-textfield__label" for="sample-expandable">Expandable Input</label>
         </div>
       </div>
-    </form>
+    </div>
     <!-- end search field -->
 
 
     <!-- main -->
-    <div id="main" class="mdl-grid" v-for=" dj in user.following " v-if=" page == '/main' ">
-
+    <div id="main" class="mdl-grid" v-for=" dj in user.following " v-if=" page == '/' ">
       <div class="mdl-cell mdl-cell--12-col">
         <h5> {{ dj.name }} </h5>
       </div>

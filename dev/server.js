@@ -16,6 +16,16 @@ app.use( '/lib', [
   express.static( `${ __dirname }/node_modules/socket.io-client` ),
 ])
 
+// ajax 요청이 아닐 경우 html 전달
+app.use( (req, res, next) => {
+  if( !req.get('X-Requested-With') ){
+    res.sendFile( `${ __dirname }/view/index.html` )
+  }
+  else{
+    next()
+  }
+})
+
 // express router
 app.use( require('./router/join.js') )
 app.use( require('./router/login.js') )
