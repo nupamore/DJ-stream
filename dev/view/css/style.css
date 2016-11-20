@@ -71,18 +71,23 @@ span.space {
   }
 }
 
+a {
+  cursor: pointer;
+}
+
 
 /*
-  intro
+  slide
 */
-#intro {
+.slide {
+  display: none;
   position: absolute;
   width: 100%;
   height: 100vh;
   background-color: #EEE;
   z-index: 999;
 }
-#intro > div {
+.slide > div {
   position: absolute;
   top: 10vh;
   left: 0;
@@ -97,7 +102,18 @@ span.space {
   right: 0;
   bottom: 10vh;
 }
-#intro button {
+#join .content {
+  position: absolute;
+  width: 300px;
+  left: 0;
+  right: 0;
+  margin: 10vh auto;
+}
+#join .content div {
+  max-width: 70%;
+  margin: 5vh auto;
+}
+.slide button {
   display: block;
   margin: 5px auto;
 }
@@ -117,6 +133,7 @@ span.space {
 #search-field {
   position: absolute;
   right: 16px;
+  margin-top: 17px;
 }
 #search-field input[type=text] {
   text-align: center;
@@ -126,9 +143,6 @@ span.space {
 /*
   main
 */
-#main {
-  margin-top: -14px;
-}
 #main .card-square.mdl-card {
   height: 250px;
 }
@@ -149,9 +163,6 @@ span.space {
 /*
   search-result
 */
-#search-result {
-  margin-top: 50px;
-}
 #search-result .search-title {
   color: rgb(28, 98, 181);
 }

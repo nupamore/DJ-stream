@@ -8,8 +8,20 @@ const router = express.Router()
 router.get( '/:userId', (req, res) => {
 
   const sample = {
-    name: '어-ㄴ',
+    name: 'DJ토끼',
     img: '/img/user.png',
+    dt: '2016-11-20',
+    follower: [
+      {
+        name: '거북이'
+      },
+      {
+        name: '사자'
+      },
+      {
+        name: '호랑이'
+      },
+    ],
     following: [
       {
         name: '최신 작품',

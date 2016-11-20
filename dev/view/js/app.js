@@ -6,16 +6,20 @@ const app = new Vue({
     // UI 문자열
     text: {
       title: 'DJ-stream',
-      introMessage: '환영합니다!',
+      intro: '환영합니다!',
       loginButton: '페이스북 계정으로 로그인',
       guestButton: '다음에 할게요',
 
       logoutButton: '로그아웃',
       mypageButton: '내 정보',
+
+      nickname: '닉네임',
+      regexError: '잘못된 형식입니다',
+      confirmButton: '적용',
     },
 
     // 화면정보
-    page: '/',
+    page: '/intro',
 
     // 유저정보
     user: {},
@@ -28,9 +32,37 @@ const app = new Vue({
   },
 
   methods: {
-    // 인트로 숨기기
-    closeIntro(){
-      $('#intro').slideUp()
+    // 페이지 이동
+    go( path, replace ){
+      const page = path.replace( /\?.*/, '' )
+      this.page = page
+
+      if( !replace ){
+        history.pushState( page, '검색창', path )
+      }
+      else{
+        history.replaceState( page, '검색창', path )
+      }
+
+      // router
+      switch( page ){
+        case '/intro':
+          $( '.slide' ).hide()
+          $( '#intro' ).show()
+        break;
+
+        case '/':
+          $( '.slide' ).slideUp()
+          app.getUserInfo( '어-ㄴ' )
+          this.searchKeyword = ''
+        break;
+
+        case '/join':
+          $( '#join' ).slideDown()
+        break;
+      }
+
+      setTimeout( () => componentHandler.upgradeDom(), 100 )
     },
 
     // 유저정보 가져오기
@@ -45,14 +77,8 @@ const app = new Vue({
     // 검색하기
     search( keyword ){
       const path = `/search?k=${ keyword }`
-
-      if( !/search/.test(history.state) ){
-        this.page = '/search'
-        history.pushState( this.page, '검색창', path )
-      }
-      else if( this.page = '/search' ){
-        history.replaceState( this.page, '검색창', path )
-      }
+      const replace = this.page == '/search'
+      this.go( path, replace )
     },
   },
 
@@ -60,14 +86,10 @@ const app = new Vue({
 
 // 히스토리 감시
 window.onpopstate = ( event ) => {
-  app.page = document.location.pathname
-
-  switch( app.page ){
-    case '/':
-      app.searchKeyword = ''
-    break;
-  }
+  const page = document.location.pathname
+  app.go( page, true )
 }
 
-history.state = document.location.pathname
-app.getUserInfo( '어-ㄴ' )
+// main
+app.go( document.location.pathname, true )
+app.getUserInfo( 'me' )
