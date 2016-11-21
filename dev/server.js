@@ -1,5 +1,6 @@
 
 // modules
+const fs = require('fs')
 const express = require('express')
 const app = express()
 const http = require('http').Server( app )
@@ -19,7 +20,13 @@ app.use( '/lib', [
 // ajax 요청이 아닐 경우 html 전달
 app.use( (req, res, next) => {
   if( !req.get('X-Requested-With') ){
-    res.sendFile( `${ __dirname }/view/index.html` )
+    const arr = []
+    arr.push( fs.readFileSync(`${ __dirname }/view/header.html`) )
+    arr.push( fs.readFileSync(`${ __dirname }/view/ui.html`) )
+    arr.push( fs.readFileSync(`${ __dirname }/view/work.html`) )
+    arr.push( fs.readFileSync(`${ __dirname }/view/footer.html`) )
+
+    res.send( arr.join('\n') )
   }
   else{
     next()
