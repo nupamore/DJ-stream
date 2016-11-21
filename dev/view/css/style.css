@@ -143,19 +143,19 @@ a {
 /*
   main
 */
-#main .card-square.mdl-card {
+.main .card-square.mdl-card {
   height: 250px;
 }
-#main .mdl-card__title-text {
+.main .mdl-card__title-text {
   color: rgb(28, 98, 181);
   height: 30px;
   overflow: hidden;
 }
-#main .mdl-card__supporting-text {
+.main .mdl-card__supporting-text {
   height: 100px;
   overflow: hidden;
 }
-#main .mdl-card__dt-text {
+.main .mdl-card__dt-text {
   float: right;
 }
 
