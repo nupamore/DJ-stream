@@ -69,6 +69,10 @@ const app = new Vue({
         case '/join':
           $( '#join' ).slideDown()
         break;
+
+        case '/work':
+          drawMixer()
+        break;
       }
 
       setTimeout( () => componentHandler.upgradeDom(), 100 )

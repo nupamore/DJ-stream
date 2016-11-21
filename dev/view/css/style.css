@@ -169,3 +169,12 @@ a {
 #search-result .mdl-card__supporting-text.search-text {
   padding: 0px;
 }
+
+
+/*
+  work
+ */
+#mixer canvas {
+  width: 100%;
+  height: auto;
+}
