@@ -41,7 +41,7 @@ const drawMixer = () => {
 
     //디스크판
     ellipseMode( CENTER )
-    fill( 250 )
+    fill( imgL )
     ellipse( width*0.3, height*0.425, height*0.45, height*0.45 )
     ellipse( width*0.7, height*0.425,height*0.45, height*0.45 )
 
@@ -49,6 +49,7 @@ const drawMixer = () => {
     ellipse( width*0.3, height*0.425,height*0.43, height*0.43 )
     ellipse( width*0.7, height*0.425,height*0.43, height*0.43 )
 
+/*
     imageMode(CENTER)
     push()
     translate( width*0.3, height*0.425 )
@@ -62,6 +63,7 @@ const drawMixer = () => {
     image( imgR, 0, 0, height*0.2, height*0.2 )
     ringR += speedR
     pop()
+*/
 
     //컨트롤러
     //왼쪽큰거
@@ -83,14 +85,14 @@ const drawMixer = () => {
     fill( 30 )
     rect( width*0.5, height*0.85, width*0.2, height*0.2 )
 
-    //left
+    //왼쪽들
     fill( 250 )
     rect( width*0.05, height*0.85, width*0.01, height*0.18 )
     rect( width*0.12, height*0.85, width*0.01, height*0.18 )
     rect( width*0.19, height*0.85, width*0.01, height*0.18 )
     rect( width*0.3, height*0.85, width*0.01, height*0.18 )
 
-    //right
+    //오른쪽들
     rect( width*0.95, height*0.85, width*0.01, height*0.18 )
     rect( width*0.88, height*0.85, width*0.01, height*0.18 )
     rect( width*0.81, height*0.85, width*0.01, height*0.18 )
