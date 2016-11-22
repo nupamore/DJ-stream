@@ -39,7 +39,7 @@ const drawMixer = () => {
     fill( 200 )
     rect( width*0.5, height*0.1, width*0.95, height*0.12, 2, 2, 2, 2 )
 
-    //draw disc
+    //디스크판
     ellipseMode( CENTER )
     fill( 250 )
     ellipse( width*0.3, height*0.425, height*0.45, height*0.45 )
