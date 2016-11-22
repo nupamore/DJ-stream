@@ -1,14 +1,15 @@
 const drawMixer = () => {
   let speedL = 0.1
   let speedR = 0.01
-  var ringL
-  var ringR
+  let ringL
+  let ringR
 
   let imgL
   const imgLPath= './img/user2.png'
 
   let imgR
   const imgRPath= './img/user.png'
+
 
   function setup() {
     const canvas = createCanvas( 900, 450 )
@@ -41,7 +42,7 @@ const drawMixer = () => {
 
     //디스크판
     ellipseMode( CENTER )
-    fill( imgL )
+    fill( 250 )
     ellipse( width*0.3, height*0.425, height*0.45, height*0.45 )
     ellipse( width*0.7, height*0.425,height*0.45, height*0.45 )
 
@@ -49,28 +50,34 @@ const drawMixer = () => {
     ellipse( width*0.3, height*0.425,height*0.43, height*0.43 )
     ellipse( width*0.7, height*0.425,height*0.43, height*0.43 )
 
-/*
     imageMode(CENTER)
     push()
     translate( width*0.3, height*0.425 )
-    rotate(ringL)
+    rotate( ringL )
     image( imgL, 0, 0, height*0.2, height*0.2 )
+    fill(0, 0, 0, 0)
+    stroke(0)
+    strokeWeight( height*0.1 )
+    ellipse( 0, 0, height*0.3, height*0.3 )
     ringL += speedL
     pop()
     push()
     translate( width*0.7, height*0.425 )
-    rotate(ringR)
+    rotate( ringR )
     image( imgR, 0, 0, height*0.2, height*0.2 )
+    fill(0, 0, 0, 0)
+    stroke(0)
+    strokeWeight( height*0.1 )
+    ellipse( 0, 0, height*0.3, height*0.3 )
     ringR += speedR
     pop()
-*/
 
     //컨트롤러
     //왼쪽큰거
     fill( 80 )
     rect( width*0.075, height*0.45, width*0.1, height*0.5 )
     fill( 255 )
-    rect( width*0.075, height*0.4, width*0.01, height*0.33 )
+    rect( width*0.075, height*0.4, width*0.008, height*0.33 )
     rect( width*0.075, height*0.63, width*0.07, height*0.08 )
     fill( 20, 255, 20 )
 
@@ -78,25 +85,25 @@ const drawMixer = () => {
     fill( 80 )
     rect( width*0.925, height*0.45, width*0.1, height*0.5 )
     fill( 255 )
-    rect( width*0.925, height*0.4, width*0.01, height*0.33 )
+    rect( width*0.925, height*0.4, width*0.008, height*0.33 )
     rect( width*0.925, height*0.63, width*0.07, height*0.08 )
 
     //가운데큰거
     fill( 30 )
     rect( width*0.5, height*0.85, width*0.2, height*0.2 )
 
-    //왼쪽들
+    //left
     fill( 250 )
-    rect( width*0.05, height*0.85, width*0.01, height*0.18 )
-    rect( width*0.12, height*0.85, width*0.01, height*0.18 )
-    rect( width*0.19, height*0.85, width*0.01, height*0.18 )
-    rect( width*0.3, height*0.85, width*0.01, height*0.18 )
+    rect( width*0.05, height*0.85, width*0.005, height*0.18 )
+    rect( width*0.12, height*0.85, width*0.005, height*0.18 )
+    rect( width*0.19, height*0.85, width*0.005, height*0.18 )
+    rect( width*0.3, height*0.85, width*0.005, height*0.18 )
 
-    //오른쪽들
-    rect( width*0.95, height*0.85, width*0.01, height*0.18 )
-    rect( width*0.88, height*0.85, width*0.01, height*0.18 )
-    rect( width*0.81, height*0.85, width*0.01, height*0.18 )
-    rect( width*0.7, height*0.85, width*0.01, height*0.18 )
+    //right
+    rect( width*0.95, height*0.85, width*0.005, height*0.18 )
+    rect( width*0.88, height*0.85, width*0.005, height*0.18 )
+    rect( width*0.81, height*0.85, width*0.005, height*0.18 )
+    rect( width*0.7, height*0.85, width*0.005, height*0.18 )
 
     if( mouseIsPressed ) {
       rect(width/2, height/2, 100, 100)
