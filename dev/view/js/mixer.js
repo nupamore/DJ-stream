@@ -83,14 +83,14 @@ const drawMixer = () => {
     fill( 30 )
     rect( width*0.5, height*0.85, width*0.2, height*0.2 )
 
-    //left
+    //왼쪽들
     fill( 250 )
     rect( width*0.05, height*0.85, width*0.01, height*0.18 )
     rect( width*0.12, height*0.85, width*0.01, height*0.18 )
     rect( width*0.19, height*0.85, width*0.01, height*0.18 )
     rect( width*0.3, height*0.85, width*0.01, height*0.18 )
 
-    //right
+    //오른쪽들
     rect( width*0.95, height*0.85, width*0.01, height*0.18 )
     rect( width*0.88, height*0.85, width*0.01, height*0.18 )
     rect( width*0.81, height*0.85, width*0.01, height*0.18 )
