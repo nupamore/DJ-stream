@@ -23,7 +23,7 @@ app.use( (req, res, next) => {
     const arr = []
     arr.push( fs.readFileSync(`${ __dirname }/view/header.html`) )
     arr.push( fs.readFileSync(`${ __dirname }/view/ui.html`) )
-    arr.push( fs.readFileSync(`${ __dirname }/view/work.html`) )
+    arr.push( fs.readFileSync(`${ __dirname }/view/wave.html`) )
     arr.push( fs.readFileSync(`${ __dirname }/view/footer.html`) )
 
     res.send( arr.join('\n') )
