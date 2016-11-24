@@ -17,12 +17,12 @@ const drawMixer = () => {
   let mixSlider
 
   function setup() {
-    smooth()
+
     const canvas = createCanvas( 900, 400 )
     canvas.parent('mixer')
 
     // 리사이징
-    $('#mixer canvas').css({
+    $('#wave canvas').css({
       width: '100%',
       height: 'auto'
     })
@@ -81,17 +81,19 @@ const drawMixer = () => {
     fill( 255 )
     rect( width*0.5, height*0.85, width*0.025, height*0.1 )
 */
-
+    // 되는데?
+    fill(255)
+    rect(mouseX, mouseY, 100, 100)
 
   }
 
 /**
  * 디스크를 그립니다
- * @param  {[float]} x        [디스크 중심 x위치]
- * @param  {[float]} y        [디스크 중심 y 위치]
- * @param  {[path]} img      [이미지]
- * @param  {[string]} position [오른쪽/왼쪽 구분]
- * @return {[none]}          [리턴 안합니다]
+ * @param  {Number} x        [디스크 중심 x위치]
+ * @param  {Number} y        [디스크 중심 y 위치]
+ * @param  {String} img      [이미지]
+ * @param  {String} position [오른쪽/왼쪽 구분]
+ * @return {none}            [리턴 안합니다]
  */
   function drawDisk( x, y, img, position ) {
     ellipseMode( CENTER )
@@ -122,8 +124,8 @@ const drawMixer = () => {
         image( imgR, 0, 0, height*0.3, height*0.3 )
         ellipse( 0, 0, height*0.4, height*0.4 )
         if( !mouseIsPressed ) {
-            ringR += speedR
-          }
+          ringR += speedR
+        }
         pop()
       }
       pop()

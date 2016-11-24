@@ -1,0 +1,61 @@
+
+<div id="user-info" class="mdl-grid" v-if=" page == '/user' ">
+
+  <div class="mdl-cell mdl-cell--12-col">
+
+  </div>
+
+  <div class="mdl-cell mdl-cell--5-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
+    <div class="mdl-card__title card-img mdl-card--expand" :style=" `background-image: url(${ user.img })` "></div>
+  </div>
+  <div class="mdl-cell mdl-cell--7-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
+    <div class="mdl-card__title-text search-title">
+      {{ user.name }}
+    </div>
+    <div class="mdl-card__supporting-text search-text">
+      <p>아이디: rabbit</p>
+      <p>아이디: {{ user.dt }}</p>
+    </div>
+  </div>
+
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <h5>
+          팔로잉
+        </h5>
+        <div class="demo-list-action mdl-list">
+
+          <div class="mdl-list__item" v-for=" dj in user.following ">
+            <span class="mdl-list__item-primary-content">
+              <i class="material-icons mdl-list__item-avatar">person</i>
+              <span>
+                {{ dj.name }}
+              </span>
+            </span>
+            <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">close</i></a>
+          </div>
+
+        </div>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <h5>
+          팔로워
+        </h5>
+        <div class="demo-list-action mdl-list">
+
+          <div class="mdl-list__item" v-for=" dj in user.follower ">
+            <span class="mdl-list__item-primary-content">
+              <i class="material-icons mdl-list__item-avatar">person</i>
+              <span>
+                {{ dj.name }}
+              </span>
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
