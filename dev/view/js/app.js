@@ -70,7 +70,7 @@ const app = new Vue({
           $( '#join' ).slideDown()
         break;
 
-        case '/work':
+        case '/wave':
           drawMixer()
         break;
       }
