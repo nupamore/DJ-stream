@@ -10,12 +10,14 @@ const drawMixer = () => {
   let ringR
 
   let imgL
-  const imgLPath= './img/user2.png'
+  const imgLPath= './img/user.png'
   let imgR
-  const imgRPath= './img/user.png'
+  const imgRPath= './img/user2.png'
 
+  let mixSlider
 
   function setup() {
+    smooth()
     const canvas = createCanvas( 900, 400 )
     canvas.parent('mixer')
 
@@ -73,10 +75,14 @@ const drawMixer = () => {
     //가운데큰거
     fill( 0 )
     rect( width*0.5, height*0.85, width*0.2, height*0.2 )
+/*
     fill( 150 )
     rect( width*0.5, height*0.85, width*0.17, height*0.01)
     fill( 255 )
     rect( width*0.5, height*0.85, width*0.025, height*0.1 )
+*/
+
+
   }
 
 /**
@@ -105,7 +111,7 @@ const drawMixer = () => {
         rotate( ringL )
         image( imgL, 0, 0, height*0.3, height*0.3 )
         ellipse( 0, 0, height*0.4, height*0.4 )
-        if( !( mouseIsPressed )) {
+        if( !mouseIsPressed ) {
           ringL += speedL
         }
         pop()
@@ -118,14 +124,10 @@ const drawMixer = () => {
         if( !mouseIsPressed ) {
             ringR += speedR
           }
-        }
-        else {
-        }
         pop()
       }
       pop()
   }
-
 
 
   function preload() {
