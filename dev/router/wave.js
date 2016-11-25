@@ -14,14 +14,14 @@ const query = {
   search : `
     SELECT WAVE_NAME, WAVE_DJ, WAVE_NAME, WAVE_DESC, WAVE_LIVE, WAVE_IMG, WAVE_VIEW, WAVE_DT
     FROM WAVE
-    WHERE WAVE_NAME LIKE '%?%' ;`
+    WHERE WAVE_NAME LIKE ? ;`
 }
 
 //작품 검색
 router.get( '/search', (req, res) => {
   const keyword = req.query.k
   const connection = mysql.createConnection( connectionInfo )
-  connection.query( query.search, [keyword], ( err, rows, fields ) => {
+  connection.query( query.search, [`%${ keyword }%`], ( err, rows, fields ) => {
       if( err ) throw err
       res.json( rows )
   })
