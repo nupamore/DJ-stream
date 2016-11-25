@@ -3,12 +3,12 @@ const express = require('express')
 const mysql = require('mysql')
 
 const router = express.Router()
-const connection = mysql.createConnection({
+const connectionInfo = {
   host : 'localhost',
   user : '7team',
   password : process.argv[2],
   database : '7team'
-})
+}
 
 const query = {
   search : `
@@ -20,12 +20,11 @@ const query = {
 //작품 검색
 router.get( '/search', (req, res) => {
   const keyword = req.query.k
-  connection.connect()
+  const connection = mysql.createConnection( connectionInfo )
   connection.query( query.search, [keyword], ( err, rows, fields ) => {
       if( err ) throw err
       res.json( rows )
   })
-  connection.end()
 })
 
 //
