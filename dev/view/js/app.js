@@ -99,7 +99,15 @@ const app = new Vue({
     search( keyword ){
       const path = `/search?k=${ keyword }`
       const replace = this.page == '/search'
-      this.go( path, replace )
+
+      $.ajax( `/search`, {
+        k : keyword
+      })
+      .done( data => {
+        searchResult = data
+        this.go( path, replace )
+      })
+
     },
   },
 
