@@ -100,8 +100,11 @@ const app = new Vue({
       const path = `/search?k=${ keyword }`
       const replace = this.page == '/search'
 
-      $.ajax( `/search`, {
-        k : keyword
+      $.ajax({
+        url : '/search',
+        data : {
+          k : keyword
+        }
       })
       .done( data => {
         searchResult = data

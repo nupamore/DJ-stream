@@ -14,7 +14,7 @@ const query = {
   search : `
     SELECT WAVE_NAME, WAVE_DJ, WAVE_NAME, WAVE_DESC, WAVE_LIVE, WAVE_IMG, WAVE_VIEW, WAVE_DT
     FROM WAVE
-    WHERE WAVE_NAME LIKE ? ;`
+    WHERE WAVE_NAME LIKE '%?%' ;`
 }
 
 //작품 검색
