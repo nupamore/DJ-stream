@@ -38,8 +38,9 @@ app.use( require('./router/join.js') )
 app.use( require('./router/login.js') )
 app.use( require('./router/follow.js') )
 app.use( require('./router/support.js') )
-app.use( require('./router/wave.js') )
+app.use( require('./router/search.js') )
 app.use( require('./router/user.js') )
+app.use( require('./router/wave.js') )
 
 // express open
 const port = 65007
