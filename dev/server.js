@@ -22,6 +22,7 @@ app.use( (req, res, next) => {
   if( !req.get('X-Requested-With') ){
     const arr = []
     arr.push( fs.readFileSync(`${ __dirname }/view/header.html`) )
+    arr.push( fs.readFileSync(`${ __dirname }/view/user.html`) )
     arr.push( fs.readFileSync(`${ __dirname }/view/ui.html`) )
     arr.push( fs.readFileSync(`${ __dirname }/view/wave.html`) )
     arr.push( fs.readFileSync(`${ __dirname }/view/footer.html`) )
