@@ -40,7 +40,6 @@ const app = new Vue({
      */
     go( path, replace ){
       const page = path.replace( /\?.*/, '' )
-      this.page = page
 
       if( !replace ){
         history.pushState( page, '검색창', path )
@@ -58,20 +57,38 @@ const app = new Vue({
         case '/intro':
           $( '.slide' ).hide()
           $( '#intro' ).show()
+          this.page = page
         break;
 
         case '/':
           $( '.slide' ).slideUp()
-          app.getUserInfo( '어-ㄴ' )
           this.searchKeyword = ''
+          this.page = page
         break;
 
         case '/join':
           $( '#join' ).slideDown()
+          this.page = page
         break;
 
+        // 임시
         case '/wave':
           drawMixer()
+          this.page = page
+        break;
+
+        default:
+          const params = path.split('/')
+
+          // 유저
+          if( !params[2] ){
+            app.getUserInfo( params[1] )
+            this.page = '/:user'
+          }
+          // 작품
+          else{
+
+          }
         break;
       }
 
@@ -87,7 +104,6 @@ const app = new Vue({
       $.ajax( `/${ id }` )
       .done( data => {
         this.user = data
-        this.searchResult = data.following[1].waves
       })
     },
 
@@ -124,4 +140,3 @@ window.onpopstate = ( event ) => {
 
 // main
 app.go( document.location.pathname, true )
-app.getUserInfo( 'me' )
