@@ -4,8 +4,8 @@ const drawMixer = () => {
   let diskRx
   let diskRy
 
-  let speedL = 0.05
-  let speedR = 0.02
+  const speedL = 0.05
+  const speedR = 0.02
   let ringL
   let ringR
 
@@ -14,10 +14,7 @@ const drawMixer = () => {
   let imgR
   const imgRPath= './img/user2.png'
 
-  let volLX
-  let volLY
-  let volRX
-  let volRY
+  const speedVol = 0.05
   let volL
   let volR
   let mixX
@@ -43,9 +40,8 @@ const drawMixer = () => {
     ringL = 0
     ringR = 0;
     //볼륨스위치 각도 초기화
-    volL = -PI-PI/6
-    volR = -PI-PI/6
-    volRY = height*0.22
+    volL = -5.2
+    volR = -5.2
     //mix스위치 위치변수 초기화
     mixX = width*0.5
     mixY = height*0.85
@@ -68,16 +64,20 @@ const drawMixer = () => {
     ellipse( width*0.43, height*0.22, height*0.15, height*0.15 )
     fill( 250 )
     ellipse( width*0.43, height*0.22, height*0.13, height*0.13 )
-    let delta
-    if( mouseIsPressed && (dist(width*0.43, height*0.13, mouseX, mouseY) < height*0.2)){
-      console.log(volL)
-      delta = ( (mouseX >= mouseY) ? mouseX : mouseY )
-      volL += delta
-      volL = constrain( volL, -PI-PI/6, PI+PI/6)
+
+    if( mouseIsPressed && (dist(width*0.43, height*0.13, mouseX, mouseY) < height*0.1)){
+      let delta = ( (abs(mouseX-pmouseX) >= abs(mouseY-pmouseY) ) ? mouseX-pmouseX : pmouseY-mouseY )
+      if( delta > 0 ){
+        volL += speedVol
+      }
+      else if ( delta < 0 ){
+        volL -= speedVol
+      }
+      volL = constrain( volL, -5.2, -3.8 )
     }
     push()
-    translate( volLX, volLY )
-    rotate( volL )
+    translate( width*0.43, height*0.22 )
+    rotate( volL%2*PI )
     stroke( 50 )
     strokeWeight( 5 )
     line( height*0.04, 0, height*0.15, 0 )
@@ -89,6 +89,25 @@ const drawMixer = () => {
     ellipse( width*0.57, height*0.22, height*0.15, height*0.15 )
     fill( 250 )
     ellipse( width*0.57, height*0.22, height*0.13, height*0.13 )
+    if( mouseIsPressed && (dist(width*0.57, height*0.22, mouseX, mouseY) < height*0.1)){
+      let delta = ( (abs(mouseX-pmouseX) >= abs(mouseY-pmouseY) ) ? mouseX-pmouseX : pmouseY-mouseY )
+      if( delta > 0 ){
+        volR += speedVol
+      }
+      else if ( delta < 0 ){
+        volR -= speedVol
+      }
+      volR = constrain( volR, -5.2, -3.8 )
+    }
+    push()
+    translate( width*0.57, height*0.22 )
+    rotate( volR%2*PI )
+    stroke( 50 )
+    strokeWeight( 5 )
+    line( height*0.04, 0, height*0.15, 0 )
+    noStroke()
+    pop()
+
 
     //왼쪽 이퀄라이저
     fill( 150 )
