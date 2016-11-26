@@ -22,6 +22,7 @@ app.use( (req, res, next) => {
   if( !req.get('X-Requested-With') ){
     const arr = []
     arr.push( fs.readFileSync(`${ __dirname }/view/header.html`) )
+    arr.push( fs.readFileSync(`${ __dirname }/view/user.html`) )
     arr.push( fs.readFileSync(`${ __dirname }/view/ui.html`) )
     arr.push( fs.readFileSync(`${ __dirname }/view/wave.html`) )
     arr.push( fs.readFileSync(`${ __dirname }/view/footer.html`) )
@@ -38,11 +39,12 @@ app.use( require('./router/join.js') )
 app.use( require('./router/login.js') )
 app.use( require('./router/follow.js') )
 app.use( require('./router/support.js') )
+app.use( require('./router/search.js') )
 app.use( require('./router/user.js') )
 app.use( require('./router/wave.js') )
 
 // express open
-const port = 80;
+const port = 65007
 http.listen( port, () => {
   console.log( `Server running at ${ port }` )
 })
