@@ -45,10 +45,10 @@ const app = new Vue({
       const page = path.replace( /\?.*/, '' )
 
       if( !replace ){
-        history.pushState( page, '검색창', path )
+        history.pushState( page, '', path )
       }
       else{
-        history.replaceState( page, '검색창', path )
+        history.replaceState( page, '', path )
       }
 
       // 햄버거메뉴 숨기기
@@ -65,6 +65,9 @@ const app = new Vue({
 
         case '/':
           $( '.slide' ).slideUp()
+          this.getUserInfo( 'hyerim', data => {
+            this.me = data
+          })
           this.searchKeyword = ''
           this.page = page
         break;
@@ -72,6 +75,10 @@ const app = new Vue({
         case '/join':
           $( '#join' ).slideDown()
           this.page = page
+        break;
+
+        case '/search':
+          this.search( path.split('k=')[1] )
         break;
 
         // 임시
@@ -85,18 +92,31 @@ const app = new Vue({
 
           // 유저
           if( !params[2] ){
-            app.getUserInfo( params[1] )
-            this.page = '/:user'
+            this.getUserInfo( params[1], data => {
+              this.user = data
+              this.user.following.forEach( (dj, index) => {
+                this.getUserInfo( dj.name, data => {
+                   this.user.following[index] = data
+                })
+              })
+              this.user.follower.forEach( (dj, index) => {
+                this.getUserInfo( dj.name, data => {
+                   this.user.follower[index] = data
+                })
+              })
+              this.page = '/:user'
+            })
           }
           // 작품
           else{
-
+            this.page = '/:user/:wave'
           }
         break;
       }
 
       setTimeout( () => componentHandler.upgradeDom(), 100 )
     },
+
 
     /**
      * 작품들을 검색한다.
@@ -115,19 +135,27 @@ const app = new Vue({
       })
       .done( data => {
         this.waves = data
-        this.go( path, replace )
+        this.page = '/search'
+
+        if( !replace ){
+          history.pushState( this.page, '', path )
+        }
+        else{
+          history.replaceState( this.page, '', path )
+        }
       })
     },
+
 
     /**
      * 유저 정보를 요청한다.
      * @param {String}  id  아이디
      * @return {SideEffect}
      */
-    getUserInfo( id ){
+    getUserInfo( id, callback ){
       $.ajax( `/${ id }` )
       .done( data => {
-        this.user = data
+        callback( data )
       })
     },
   },

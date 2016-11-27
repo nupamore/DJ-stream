@@ -12,7 +12,7 @@
 
     <!-- user nav -->
     <nav class="mdl-navigation mdl-layout--large-screen-only">
-      <img class="img-icon" :src=" user.img ">
+      <img class="img-icon" :src=" me.img ">
       <a class="mdl-navigation__link" @click=" go('/user') ">
         {{ text.mypageButton }}
       </a>
@@ -27,10 +27,10 @@
 
   <!-- user nav -->
   <nav class="mdl-navigation">
-    <img class="img-icon" :src=" user.img ">
+    <img class="img-icon" :src=" me.img ">
     <a class="mdl-navigation__link">
       <h5>
-        {{ user.name }}
+        {{ me.name }}
       </h5>
     </a>
     <a class="mdl-navigation__link" @click=" go('/user') ">

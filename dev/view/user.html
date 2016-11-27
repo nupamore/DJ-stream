@@ -69,7 +69,7 @@
     </h5>
   </div>
 
-  <div class="mdl-cell mdl-cell--12-col" v-for=" wave in waves ">
+  <div class="mdl-cell mdl-cell--12-col" v-for=" wave in user.waves ">
     <div class="mdl-card mdl-shadow--2dp">
       <div class="mdl-grid">
 
@@ -78,7 +78,7 @@
         </div>
         <div class="mdl-cell mdl-cell--7-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
           <div class="mdl-card__title-text waves-title">
-            {{ wave.title }}
+            {{ wave.name }}
           </div>
           <div class="mdl-card__supporting-text waves-text">
             {{ user.name }}
