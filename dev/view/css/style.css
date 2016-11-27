@@ -161,12 +161,12 @@ a {
 
 
 /*
-  search-result
+  waves
 */
-#search-result .search-title {
+.waves .waves-title {
   color: rgb(28, 98, 181);
 }
-#search-result .mdl-card__supporting-text.search-text {
+.waves .mdl-card__supporting-text.waves-text {
   padding: 0px;
 }
 
