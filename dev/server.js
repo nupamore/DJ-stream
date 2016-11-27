@@ -5,9 +5,10 @@ const express = require('express')
 const app = express()
 const http = require('http').Server( app )
 const socket = require('./socket.js')
+const ejs = require('ejs')
 
 
-// express static
+// express setting
 app.use( express.static(`${ __dirname }/view`) )
 app.use( '/lib', [
   express.static( `${ __dirname }/node_modules/jquery/dist` ),
@@ -16,18 +17,13 @@ app.use( '/lib', [
   express.static( `${ __dirname }/node_modules/p5/lib` ),
   express.static( `${ __dirname }/node_modules/socket.io-client` ),
 ])
+app.set( 'view engine', 'ejs' )
+app.set( 'port', 65007 )
 
 // ajax 요청이 아닐 경우 html 전달
 app.use( (req, res, next) => {
   if( !req.get('X-Requested-With') ){
-    const arr = []
-    arr.push( fs.readFileSync(`${ __dirname }/view/header.html`) )
-    arr.push( fs.readFileSync(`${ __dirname }/view/user.html`) )
-    arr.push( fs.readFileSync(`${ __dirname }/view/ui.html`) )
-    arr.push( fs.readFileSync(`${ __dirname }/view/wave.html`) )
-    arr.push( fs.readFileSync(`${ __dirname }/view/footer.html`) )
-
-    res.send( arr.join('\n') )
+    res.render( `${ __dirname }/view/index.ejs` )
   }
   else{
     next()
@@ -44,9 +40,8 @@ app.use( require('./router/user.js') )
 app.use( require('./router/wave.js') )
 
 // express open
-const port = 65007
-http.listen( port, () => {
-  console.log( `Server running at ${ port }` )
+http.listen( app.get('port'), () => {
+  console.log( `Server running at ${ app.get('port') }` )
 })
 
 // socket open

@@ -1,112 +1,18 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <title>DJ-stream</title>
+<!-- header -->
+<header class="mdl-layout__header">
+  <div class="mdl-layout__header-row max-width">
 
-  <!-- lib -->
-  <link rel="stylesheet" href="/lib/material.min.css">
-  <script src="/lib/jquery.min.js"></script>
-  <script src="/lib/material.min.js"></script>
-  <script src="/lib/vue.min.js"></script>
-  <script src="/lib/socket.io.js"></script>
-  <script src="/lib/p5.min.js"></script>
-  <script src="/lib/addons/p5.dom.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-  <!-- custom -->
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-
-<body>
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-
-  <!-- intro -->
-  <section id="intro" class="slide">
-    <!-- login -->
-    <div>
-      <img src="/img/logo.png" class="img-icon">
-
-      <div class="content">
-        <p>
-          {{ text.intro }}
-        </p>
-        <button class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click=" go('/join') ">
-          {{ text.loginButton }}
-        </button>
-        <button class="mdl-button mdl-js-button mdl-js-ripple-effect" @click=" go('/') ">
-          {{ text.guestButton }}
-        </button>
-      </div>
-
-    </div>
-  </section>
-  <!-- end intro -->
-
-
-  <!-- join -->
-  <section id="join" class="slide">
-    <div>
-      <div class="content">
-        <img src="/img/user.png" class="img-icon">
-
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" type="text" pattern="[ㄱ-힣A-Za-z0-9\-_]*" id="nickname">
-          <label class="mdl-textfield__label" for="nickname">
-            {{ text.nickname }}
-          </label>
-          <span class="mdl-textfield__error">
-            {{ text.regexError }}
-          </span>
-        </div>
-        <button class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click=" go('/') ">
-          {{ text.confirmButton }}
-        </button>
-
-      </div>
-
-    </div>
-  </section>
-  <!-- end join -->
-
-
-  <!-- header -->
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row max-width">
-
-      <!-- title -->
-      <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
-      <h1 class="mdl-layout-title">
-        {{ text.title }}
-      </h1>
-      <div class="mdl-layout-spacer"></div>
-
-      <!-- user nav -->
-      <nav class="mdl-navigation mdl-layout--large-screen-only">
-        <img class="img-icon" :src=" user.img ">
-        <a class="mdl-navigation__link" @click=" go('/user') ">
-          {{ text.mypageButton }}
-        </a>
-        <a class="mdl-navigation__link">
-          {{ text.logoutButton }}
-        </a>
-      </nav>
-
-    </div>
-  </header>
-  <header class="mdl-layout__drawer mdl-layout--small-screen-only">
+    <!-- title -->
+    <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
+    <h1 class="mdl-layout-title">
+      {{ text.title }}
+    </h1>
+    <div class="mdl-layout-spacer"></div>
 
     <!-- user nav -->
-    <nav class="mdl-navigation">
+    <nav class="mdl-navigation mdl-layout--large-screen-only">
       <img class="img-icon" :src=" user.img ">
-      <a class="mdl-navigation__link">
-        <h5>
-          {{ user.name }}
-        </h5>
-      </a>
       <a class="mdl-navigation__link" @click=" go('/user') ">
         {{ text.mypageButton }}
       </a>
@@ -115,9 +21,25 @@
       </a>
     </nav>
 
-  </header>
-  <!-- end header -->
+  </div>
+</header>
+<header class="mdl-layout__drawer mdl-layout--small-screen-only">
 
+  <!-- user nav -->
+  <nav class="mdl-navigation">
+    <img class="img-icon" :src=" user.img ">
+    <a class="mdl-navigation__link">
+      <h5>
+        {{ user.name }}
+      </h5>
+    </a>
+    <a class="mdl-navigation__link" @click=" go('/user') ">
+      {{ text.mypageButton }}
+    </a>
+    <a class="mdl-navigation__link">
+      {{ text.logoutButton }}
+    </a>
+  </nav>
 
-  <!-- content -->
-  <section id="content" class="mdl-layout__content max-width">
+</header>
+<!-- end header -->
