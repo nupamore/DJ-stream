@@ -20,14 +20,17 @@ const app = new Vue({
     // 화면정보
     page: '/intro',
 
+    // 내 정보
+    me: {},
+
     // 유저정보
     user: {},
 
+    // 작품정보들
+    waves: [],
+
     // 검색키워드
     searchKeyword: '',
-
-    // 검색결과
-    searchResult: [],
   },
 
   methods: {
@@ -96,18 +99,6 @@ const app = new Vue({
     },
 
     /**
-     * 유저 정보를 요청한다.
-     * @param {String}  id  아이디
-     * @return {SideEffect}
-     */
-    getUserInfo( id ){
-      $.ajax( `/${ id }` )
-      .done( data => {
-        this.user = data
-      })
-    },
-
-    /**
      * 작품들을 검색한다.
      * @param {String}  keyword 키워드
      * @return {SideEffect}
@@ -123,10 +114,21 @@ const app = new Vue({
         }
       })
       .done( data => {
-        searchResult = data
+        this.waves = data
         this.go( path, replace )
       })
+    },
 
+    /**
+     * 유저 정보를 요청한다.
+     * @param {String}  id  아이디
+     * @return {SideEffect}
+     */
+    getUserInfo( id ){
+      $.ajax( `/${ id }` )
+      .done( data => {
+        this.user = data
+      })
     },
   },
 
