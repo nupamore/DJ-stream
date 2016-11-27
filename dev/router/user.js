@@ -45,6 +45,7 @@ router.get( '/:userId', (req, res) => {
   const user = []
   connection.query( query.myInfo, [id], ( err, rows, fields ) => {
     if( err ) throw err
+<<<<<<< HEAD
     user = rows.map( x => {
       return {
         name : x.USER_NICKNAME,
@@ -52,6 +53,49 @@ router.get( '/:userId', (req, res) => {
         dt: x.USER_DT,
       }
     })
+=======
+
+    // 예시입니다!
+    const user = {
+      id: 'hyerim',
+      name: '혜림',
+      img: '/img/user.png',
+      dt: '2016-11-27',
+      following: [
+        {
+          name: 'sangbaek'
+        }
+      ],
+      follower: [
+        {
+          name: 'sangbaek'
+        },
+        {
+          name: 'jonghoon'
+        }
+      ],
+      waves: [
+        {
+          id: 5,
+          dj: 'hyerim',
+          name: 'yo',
+          desc: 'check it out',
+          img: '/img/logo.png',
+          view: 123,
+          dt: '2016-11-27',
+        },
+        {
+          id: 6,
+          dj: 'hyerim',
+          name: 'this',
+          desc: 'is a pen',
+          img: '/img/logo.png',
+          view: 123,
+          dt: '2016-11-27',
+        }
+      ]
+    }
+>>>>>>> refs/remotes/origin/master
     res.json( user )
   })
 })

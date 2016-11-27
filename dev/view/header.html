@@ -13,7 +13,7 @@
     <!-- user nav -->
     <nav class="mdl-navigation mdl-layout--large-screen-only">
       <img class="img-icon" :src=" me.img ">
-      <a class="mdl-navigation__link" @click=" go('/user') ">
+      <a class="mdl-navigation__link" @click=" go( `/${ me.name }` ) ">
         {{ text.mypageButton }}
       </a>
       <a class="mdl-navigation__link">
@@ -33,7 +33,7 @@
         {{ me.name }}
       </h5>
     </a>
-    <a class="mdl-navigation__link" @click=" go('/user') ">
+    <a class="mdl-navigation__link" @click=" `/${ me.name }` ">
       {{ text.mypageButton }}
     </a>
     <a class="mdl-navigation__link">
