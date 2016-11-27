@@ -24,7 +24,20 @@ router.get( '/search', (req, res) => {
   const connection = mysql.createConnection( connectionInfo )
   connection.query( query.search, [`%${ keyword }%`, `%${ keyword }%`], ( err, rows, fields ) => {
       if( err ) throw err
-      res.json( rows )
+
+      // 예시입니다!
+      const waves = [
+        {
+          id: 5,
+          dj: 'hyerim',
+          name: 'yo',
+          desc: 'check it out',
+          img: '/img/logo.png',
+          view: 123,
+          dt: '2016-11-27',
+        }
+      ]
+      res.json( waves )
   })
 })
 

@@ -20,14 +20,17 @@ const app = new Vue({
     // 화면정보
     page: '/intro',
 
+    // 내 정보
+    me: {},
+
     // 유저정보
     user: {},
 
+    // 작품정보들
+    waves: [],
+
     // 검색키워드
     searchKeyword: '',
-
-    // 검색결과
-    searchResult: [],
   },
 
   methods: {
@@ -40,13 +43,12 @@ const app = new Vue({
      */
     go( path, replace ){
       const page = path.replace( /\?.*/, '' )
-      this.page = page
 
       if( !replace ){
-        history.pushState( page, '검색창', path )
+        history.pushState( page, '', path )
       }
       else{
-        history.replaceState( page, '검색창', path )
+        history.replaceState( page, '', path )
       }
 
       // 햄버거메뉴 숨기기
@@ -58,38 +60,63 @@ const app = new Vue({
         case '/intro':
           $( '.slide' ).hide()
           $( '#intro' ).show()
+          this.page = page
         break;
 
         case '/':
           $( '.slide' ).slideUp()
-          app.getUserInfo( '어-ㄴ' )
+          this.getUserInfo( 'hyerim', data => {
+            this.me = data
+          })
           this.searchKeyword = ''
+          this.page = page
         break;
 
         case '/join':
           $( '#join' ).slideDown()
+          this.page = page
         break;
 
+        case '/search':
+          this.search( path.split('k=')[1] )
+        break;
+
+        // 임시
         case '/wave':
           drawMixer()
+          this.page = page
+        break;
+
+        default:
+          const params = path.split('/')
+
+          // 유저
+          if( !params[2] ){
+            this.getUserInfo( params[1], data => {
+              this.user = data
+              this.user.following.forEach( (dj, index) => {
+                this.getUserInfo( dj.name, data => {
+                   this.user.following[index] = data
+                })
+              })
+              this.user.follower.forEach( (dj, index) => {
+                this.getUserInfo( dj.name, data => {
+                   this.user.follower[index] = data
+                })
+              })
+              this.page = '/:user'
+            })
+          }
+          // 작품
+          else{
+            this.page = '/:user/:wave'
+          }
         break;
       }
 
       setTimeout( () => componentHandler.upgradeDom(), 100 )
     },
 
-    /**
-     * 유저 정보를 요청한다.
-     * @param {String}  id  아이디
-     * @return {SideEffect}
-     */
-    getUserInfo( id ){
-      $.ajax( `/${ id }` )
-      .done( data => {
-        this.user = data
-        this.searchResult = data.following[1].waves
-      })
-    },
 
     /**
      * 작품들을 검색한다.
@@ -107,10 +134,29 @@ const app = new Vue({
         }
       })
       .done( data => {
-        searchResult = data
-        this.go( path, replace )
-      })
+        this.waves = data
+        this.page = '/search'
 
+        if( !replace ){
+          history.pushState( this.page, '', path )
+        }
+        else{
+          history.replaceState( this.page, '', path )
+        }
+      })
+    },
+
+
+    /**
+     * 유저 정보를 요청한다.
+     * @param {String}  id  아이디
+     * @return {SideEffect}
+     */
+    getUserInfo( id, callback ){
+      $.ajax( `/${ id }` )
+      .done( data => {
+        callback( data )
+      })
     },
   },
 
@@ -124,4 +170,3 @@ window.onpopstate = ( event ) => {
 
 // main
 app.go( document.location.pathname, true )
-app.getUserInfo( 'me' )
