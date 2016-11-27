@@ -13,7 +13,7 @@ const connectionInfo = {
 
 const query = {
   search : `
-    SELECT WAVE_NAME, WAVE_DJ, WAVE_DESC, WAVE_LIVE, WAVE_IMG, WAVE_VIEW, WAVE_DT
+    SELECT WAVE_ID, WAVE_NAME, WAVE_DJ, WAVE_DESC, WAVE_LIVE, WAVE_IMG, WAVE_VIEW, WAVE_DT
     FROM WAVE
     WHERE WAVE_NAME LIKE ? OR WAVE_DJ LIKE ? ;`
 }
@@ -26,17 +26,17 @@ router.get( '/search', (req, res) => {
       if( err ) throw err
 
       // 예시입니다!
-      const waves = [
-        {
-          id: 5,
-          dj: 'hyerim',
-          name: 'yo',
-          desc: 'check it out',
-          img: '/img/logo.png',
-          view: 123,
-          dt: '2016-11-27',
-        }
-      ]
+      const waves = rows.map( x => {
+          return {
+            id: x.WAVE_ID,
+            dj : x.WAVE_DJ,
+            name : x.WAVE_NAME,
+            desc : x.WAVE_DESC,
+            img : x.WAVE_IMG,
+            view : x.WAVE_VIEW,
+            dt : x.WAVE_DT
+          }
+      })
       res.json( waves )
   })
 })
