@@ -1,7 +1,7 @@
 
 // modules
 const express = require('express')
-
+const mysql = require('mysql')
 
 const router = express.Router()
 const connectionInfo = {
@@ -25,18 +25,8 @@ const query = {
     ;`
 }
 
-router.get( '/search', (req, res) => {
-  const keyword = req.query.k
-  const connection = mysql.createConnection( connectionInfo )
-  connection.query( query.search, [`%${ keyword }%`, `%${ keyword }%`], ( err, rows, fields ) => {
-      if( err ) throw err
-      console.log( query )
-      res.json( rows )
-  })
-})
-
 router.get( '/:userId', (req, res) => {
-  const id = req.query.userId.toLowerCase()
+  const id = req.query.userId
   const connection = mysql.createConnection( connectionInfo )
   connection.query( query.searchByUserId, ['userid'], ( err, rows, fields ) => {
 
@@ -44,7 +34,7 @@ router.get( '/:userId', (req, res) => {
 })
 
 router.get( '/:userId/:waveName', (req, res) => {
-  const id = req.query.userId.toLowerCase()
+  const id = req.query.userId
   const waveName = req.query.waveName
   const connection = mysql.createConnection ( connectionInfo )
   connection.query( query.searchByWaveName, ['userid', 'waveName'],( err, rows, fields ) => {

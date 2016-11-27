@@ -22,7 +22,7 @@ router.get( '/search', (req, res) => {
   const keyword = req.query.k
   const connection = mysql.createConnection( connectionInfo )
   connection.query( query.search, [`%${ keyword }%`], ( err, rows, fields ) => {
-      if( err ) throw err
+    //  if( err ) throw err
       res.json( rows )
   })
 })
