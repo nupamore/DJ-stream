@@ -28,7 +28,8 @@ router.get( '/:userId', (req, res) => {
 
     // 예시입니다!
     const user = {
-      name: 'hyerim',
+      id: 'hyerim',
+      name: '혜림',
       img: '/img/user.png',
       dt: '2016-11-27',
       following: [
@@ -50,6 +51,15 @@ router.get( '/:userId', (req, res) => {
           dj: 'hyerim',
           name: 'yo',
           desc: 'check it out',
+          img: '/img/logo.png',
+          view: 123,
+          dt: '2016-11-27',
+        },
+        {
+          id: 6,
+          dj: 'hyerim',
+          name: 'this',
+          desc: 'is a pen',
           img: '/img/logo.png',
           view: 123,
           dt: '2016-11-27',

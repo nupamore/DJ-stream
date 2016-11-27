@@ -67,6 +67,13 @@ const app = new Vue({
           $( '.slide' ).slideUp()
           this.getUserInfo( 'hyerim', data => {
             this.me = data
+
+            this.me.following.forEach( (dj, index) => {
+              this.getUserInfo( dj.name, data => {
+                this.$set( this.me.following[index], data )
+                this.me.following[index] = data
+              })
+            })
           })
           this.searchKeyword = ''
           this.page = page
@@ -94,16 +101,6 @@ const app = new Vue({
           if( !params[2] ){
             this.getUserInfo( params[1], data => {
               this.user = data
-              this.user.following.forEach( (dj, index) => {
-                this.getUserInfo( dj.name, data => {
-                   this.user.following[index] = data
-                })
-              })
-              this.user.follower.forEach( (dj, index) => {
-                this.getUserInfo( dj.name, data => {
-                   this.user.follower[index] = data
-                })
-              })
               this.page = '/:user'
             })
           }
