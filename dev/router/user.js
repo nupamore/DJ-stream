@@ -73,7 +73,6 @@ router.get( '/:userId', (req, res) => {
     const following = results[2]
     const wave = results[3]
 
-    console.log(info)
     const user = {
       id : info.USER_ID,
       name : info.USER_NICKNAME,
