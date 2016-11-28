@@ -1,26 +1,43 @@
+
 // modules
 const express = require('express')
+const bodyParser = require('body-parser');
 const mysql = require('mysql')
 
+const jsonParser = bodyParser.json({
+  type : 'application/*+json'
+})
 const router = express.Router()
+
 const connectionInfo = {
-  host : 'localhost',
-  user : '7team',
-  password : process.argv[2],
-  database : '7team'
+  host : 'nupa.fun25.co.kr',  port : 17904,
+  user : 'hyerim',
+  password : 'rimhye',
+  database : 'djstream'
 }
+
 
 const query = {
-  search : `
-    SELECT WAVE_NAME, WAVE_DJ, WAVE_NAME, WAVE_DESC, WAVE_LIVE, WAVE_IMG, WAVE_VIEW, WAVE_DT
-    FROM WAVE
-    WHERE WAVE_NAME LIKE ? ;`
-}
+  wave : `
+    INSERT INTO WAVE ( WAVE_DJ, WAVE_NAME, WAVE_DESC, WAVE_LIVE, WAVE_IMG, WAVE_DT )
+    VALUES ( ?, ?, ?, TRUE, ?, NOW());`
+  }
 
 
-router.get( '/:userId/:waveName', (req, res) => {
-
-  res.send( req.params.waveName )
+router.post( '/:userId/:waveName', jsonParser, (req, res) => {
+  const dj = req.params.userId
+  const waveName = req.params.waveName
+  const connection = mysql.createConnection( connectionInfo )
+  const description = 'abc'
+  const imgPath = 'abc'
+  connection.query( query.wave, [ dj, waveName,  description, imaPath ], ( err, result ) => {
+      if( err ) {
+        res.sendStatus( 404 )
+      }
+      else {
+        res.json( result )
+      }
+  })
 })
 
 module.exports = router
