@@ -13,9 +13,10 @@ const connectionInfo = {
 
 const query = {
   search : `
-    SELECT WAVE_ID, WAVE_NAME, WAVE_DJ, WAVE_DESC, WAVE_LIVE, WAVE_IMG, WAVE_VIEW, WAVE_DT
+    SELECT WAVE_ID, WAVE_NAME, WAVE_DJ, WAVE_LIVE, WAVE_DESC, WAVE_LIVE, WAVE_IMG, WAVE_VIEW, WAVE_DT
     FROM WAVE
-    WHERE WAVE_NAME LIKE ? OR WAVE_DJ LIKE ? ;`
+    WHERE WAVE_NAME LIKE ? OR WAVE_DJ LIKE ?
+    ORDER BY WAVE_LIVE DESC;`
 }
 
 //작품 검색
@@ -34,6 +35,7 @@ router.get( '/search', (req, res) => {
             desc : x.WAVE_DESC,
             img : x.WAVE_IMG,
             view : x.WAVE_VIEW,
+            live : x.WAVE_LIVE,
             dt : x.WAVE_DT
           }
       })

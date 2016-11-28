@@ -34,10 +34,11 @@ const query = {
           USER.USER_ID = ?  `,
   //내 작품 조회
   myWave : `
-    SELECT WAVE.WAVE_ID id, WAVE.WAVE_DJ dj, WAVE.WAVE_NAME name, WAVE.WAVE_DESC de, WAVE.WAVE_IMG img, WAVE.WAVE_DT dt, WAVE.WAVE_VIEW view
+    SELECT WAVE.WAVE_ID id, WAVE.WAVE_DJ dj, WAVE.WAVE_NAME name, WAVE_LIVE live, WAVE.WAVE_DESC de, WAVE.WAVE_IMG img, WAVE.WAVE_DT dt, WAVE.WAVE_VIEW view
     FROM USER, WAVE
     WHERE USER.USER_ID = WAVE.WAVE_DJ AND
-          WAVE.WAVE_DJ = ?; `
+          WAVE.WAVE_DJ = ?
+    ORDER BY WAVE.WAVE_LIVE DESC;`
 }
 
 
@@ -91,6 +92,7 @@ router.get( '/:userId', (req, res) => {
         desc : x.desc,
         img : x.img,
         view : x.view,
+        live : x.live,
         dt : x.dt
       }))
     }
