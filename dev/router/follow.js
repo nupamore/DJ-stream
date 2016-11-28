@@ -2,7 +2,7 @@
 // modules
 const express = require('express')
 const bodyParser = require('body-parser');
-const express = require('mysql')
+const mysql = require('mysql')
 
 const jsonParser = bodyParser.json({
   type : 'application/*+json'
@@ -10,8 +10,7 @@ const jsonParser = bodyParser.json({
 const router = express.Router()
 
 const connectionInfo = {
-  host : 'nupa.fun25.co.kr',
-  port : 17904,
+  host : 'nupa.fun25.co.kr',  port : 17904,
   user : 'hyerim',
   password : 'rimhye',
   database : 'djstream'
