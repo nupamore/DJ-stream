@@ -2,7 +2,7 @@
 // modules
 const express = require('express')
 const bodyParser = require('body-parser');
-const express = require('mysql')
+const mysql = require('mysql')
 
 const jsonParser = bodyParser.json({
   type : 'application/*+json'
