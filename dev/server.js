@@ -31,7 +31,6 @@ app.use( (req, res, next) => {
 })
 
 // express router
-app.use( require('./router/main.js') )
 app.use( require('./router/join.js') )
 app.use( require('./router/login.js') )
 app.use( require('./router/follow.js') )

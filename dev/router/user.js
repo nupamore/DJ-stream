@@ -3,16 +3,10 @@
 const express = require('express')
 const mysql = require('mysql')
 const async = require('async')
+const db = require('../custom_modules/db.js')
 
 
 const router = express.Router()
-const connectionInfo = {
-  host : 'nupa.fun25.co.kr',
-  port : 17904,
-  user : 'hyerim',
-  password : 'rimhye',
-  database : 'djstream'
-}
 
 const query = {
   //사용자 기본 정보 조회
@@ -45,7 +39,7 @@ const query = {
 
 router.get( '/:userId', (req, res) => {
   const id = req.params.userId
-  const connection = mysql.createConnection( connectionInfo )
+  const connection = mysql.createConnection( db.connectionInfo )
 
   async.parallel([
     callback => {

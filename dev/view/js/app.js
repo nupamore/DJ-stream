@@ -31,6 +31,9 @@ const app = new Vue({
 
     // 검색키워드
     searchKeyword: '',
+
+    // 에러여부
+    error: false,
   },
 
   methods: {
@@ -166,4 +169,4 @@ window.onpopstate = ( event ) => {
 }
 
 // main
-app.go( document.location.pathname, true )
+app.go( document.location.href.split( document.location.host )[1] , true )

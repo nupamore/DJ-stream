@@ -3,19 +3,12 @@
 const express = require('express')
 const bodyParser = require('body-parser');
 const mysql = require('mysql')
+const db = require('../custom_modules/db.js')
 
 const jsonParser = bodyParser.json({
   type : 'application/*+json'
 })
 const router = express.Router()
-
-const connectionInfo = {
-  host : 'nupa.fun25.co.kr',
-  port : 17904,
-  user : 'hyerim',
-  password : 'rimhye',
-  database : 'djstream'
-}
 
 const query = {
   support : `
@@ -26,7 +19,7 @@ const query = {
 router.get( '/support', jsonParser, (req, res) => {
   const user = req.body.me
   const dj = req.body.dj
-  const connection = mysql.createConnection( connectionInfo )
+  const connection = mysql.createConnection( db.connectionInfo )
   connection.query( query.follow, [ user, dj ], ( err, result ) => {
       if( err ) {
         res.sendStatus( 404 )
