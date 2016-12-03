@@ -1,5 +1,6 @@
 build
 *.db
+secret.js
 
 
 # Created by https://www.gitignore.io/api/node

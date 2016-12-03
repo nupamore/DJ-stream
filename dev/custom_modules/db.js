@@ -1,9 +1,12 @@
 
+const secret = require('./secret.js')
+
+
 const fun25Info = {
   host : 'nupa.fun25.co.kr',
   port : 17904,
   user : 'hyerim',
-  password : 'rimhye',
+  password : secret.fun25,
   database : 'djstream'
 }
 
@@ -11,7 +14,7 @@ const gachonInfo = {
   host : 'localhost',
   port : 3306,
   user : '7team',
-  password : 'gachon654321',
+  password : secret.gachon,
   database : '7team'
 }
 

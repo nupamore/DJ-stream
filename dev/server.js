@@ -1,14 +1,26 @@
 
 // modules
 const fs = require('fs')
+const ejs = require('ejs')
 const express = require('express')
 const app = express()
 const http = require('http').Server( app )
 const socket = require('./socket.js')
-const ejs = require('ejs')
+const auth = require('./custom_modules/auth.js')
 
 
 // express setting
+app.set( 'view engine', 'ejs' )
+app.set( 'port', 65007 )
+app.use(
+  auth.session({
+    secret: 'DJ-stream'
+  })
+)
+app.use( auth.passport.initialize() )
+app.use( auth.passport.session() )
+
+// express static
 app.use( express.static(`${ __dirname }/view`) )
 app.use( '/lib', [
   express.static( `${ __dirname }/node_modules/jquery/dist` ),
@@ -17,13 +29,18 @@ app.use( '/lib', [
   express.static( `${ __dirname }/node_modules/p5/lib` ),
   express.static( `${ __dirname }/node_modules/socket.io-client` ),
 ])
-app.set( 'view engine', 'ejs' )
-app.set( 'port', 65007 )
+
 
 // ajax 요청이 아닐 경우 html 전달
 app.use( (req, res, next) => {
-  if( !req.get('X-Requested-With') ){
-    res.render( `${ __dirname }/view/index.ejs` )
+  // 임시
+  if( req.path == '/login' || req.path == '/login/callback' ){
+    next()
+  }
+  else if( !req.get('X-Requested-With') ){
+    res.render( `${ __dirname }/view/index.ejs`, {
+      user: req.user
+    })
   }
   else{
     next()
@@ -31,7 +48,6 @@ app.use( (req, res, next) => {
 })
 
 // express router
-app.use( require('./router/join.js') )
 app.use( require('./router/login.js') )
 app.use( require('./router/follow.js') )
 app.use( require('./router/support.js') )
