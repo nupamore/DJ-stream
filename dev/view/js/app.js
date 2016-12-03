@@ -93,8 +93,9 @@ const app = new Vue({
 
         // 임시
         case '/wave':
-          drawMixer()
           this.page = page
+          drawMixer()
+          socketClient( 'yo' )
         break;
 
         default:
