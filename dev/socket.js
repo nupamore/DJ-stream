@@ -12,5 +12,9 @@ exports.listen = ( http ) => {
     socket.on( 'disconnect', () => {
       console.log( 'user disconnected' )
     })
+
+    socket.on( 'adduser', ( userName ) => {
+      console.log( userName )
+    })
   })
 }
