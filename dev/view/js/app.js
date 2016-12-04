@@ -105,6 +105,13 @@ const app = new Vue({
           this.search( path.split('k=')[1] )
         break;
 
+        // 임시
+        case '/wave':
+          this.page = page
+          drawMixer()
+          socketClient( 'yo' )
+        break;
+
         default:
           const params = path.split('/')
 
@@ -117,15 +124,17 @@ const app = new Vue({
           }
           // 작품
           else{
-            this.page = '/:user/:wave'
+            this.go('/wave')
+            setTimeout( () => {
+              history.replaceState( page, '', path )
+            }, 100)
+
+            /*
             $.ajax( document.location.pathname )
             .done( data => {
               this.wave = data
-
-              console.log( $('#mixer') )
-              drawMixer()
-              socketClient( this.wave.dj, this.wave.id )
             })
+            */
           }
         break;
       }
