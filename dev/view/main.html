@@ -16,7 +16,7 @@
 
 
 <!-- main -->
-<div class="main mdl-grid" v-for=" dj in user.following " v-if=" page == '/' ">
+<div class="main mdl-grid" v-for=" dj in me.following " v-if=" page == '/' ">
   <div class="mdl-cell mdl-cell--12-col">
     <h5>
       {{ dj.name }}
@@ -28,8 +28,11 @@
       <div class="mdl-card__title mdl-card--expand" :style=" `background-image: url(${ wave.img })` "></div>
 
       <div class="mdl-card__supporting-text">
+        <div class="mdl-card__live-text" v-if=" wave.live ">
+          ON AIR
+        </div>
         <div class="mdl-card__title-text">
-          {{ wave.title }}
+          {{ wave.name }}
         </div>
         <span class="mdl-card__dt-text">
           {{ wave.dt }}
@@ -44,15 +47,15 @@
 
 
 <!-- search result -->
-<div id="search-result" class="mdl-grid" v-if=" page == '/search' || page == '/user' ">
+<div class="waves mdl-grid" v-if=" page == '/search' ">
 
-  <!-- waves -->
   <div class="mdl-cell mdl-cell--12-col">
     <h5>
-      작품
+      검색결과
     </h5>
   </div>
-  <div class="mdl-cell mdl-cell--12-col" v-for=" wave in searchResult ">
+
+  <div class="mdl-cell mdl-cell--12-col" v-for=" wave in waves ">
     <div class="mdl-card mdl-shadow--2dp">
       <div class="mdl-grid">
 
@@ -60,17 +63,17 @@
           <div class="mdl-card__title card-img mdl-card--expand" :style=" `background-image: url(${ wave.img })` "></div>
         </div>
         <div class="mdl-cell mdl-cell--7-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
-          <div class="mdl-card__title-text search-title">
-            {{ wave.title }}
+          <div class="mdl-card__title-text waves-title">
+            {{ wave.name }}
           </div>
-          <div class="mdl-card__supporting-text search-text">
-            {{ user.name }}
+          <div class="mdl-card__supporting-text waves-text">
+            {{ wave.dj }}
           </div>
-          <div class="mdl-card__supporting-text search-text">
+          <div class="mdl-card__supporting-text waves-text">
             {{ wave.dt }}
           </div>
           <div class="space"></div>
-          <div class="mdl-card__supporting-text search-text">
+          <div class="mdl-card__supporting-text waves-text">
             {{ wave.desc }}
           </div>
         </div>

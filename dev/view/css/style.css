@@ -155,18 +155,25 @@ a {
   height: 100px;
   overflow: hidden;
 }
+.main .mdl-card__live-text {
+  position: absolute;
+  background: #F00;
+  color: #FFF;
+  right: 10px;
+  padding: 3px 5px;
+}
 .main .mdl-card__dt-text {
   float: right;
 }
 
 
 /*
-  search-result
+  waves
 */
-#search-result .search-title {
+.waves .waves-title {
   color: rgb(28, 98, 181);
 }
-#search-result .mdl-card__supporting-text.search-text {
+.waves .mdl-card__supporting-text.waves-text {
   padding: 0px;
 }
 

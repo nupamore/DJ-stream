@@ -1,5 +1,5 @@
 
-<div id="user-info" class="mdl-grid" v-if=" page == '/user' ">
+<div id="user-info" class="mdl-grid" v-if=" page == '/:user' ">
 
   <div class="mdl-cell mdl-cell--12-col">
 
@@ -13,8 +13,8 @@
       {{ user.name }}
     </div>
     <div class="mdl-card__supporting-text search-text">
-      <p>아이디: rabbit</p>
-      <p>아이디: {{ user.dt }}</p>
+      <p>아이디: {{ user.id }}</p>
+      <p>가입일자: {{ user.dt }}</p>
     </div>
   </div>
 
@@ -59,3 +59,42 @@
   </div>
 
 </div>
+
+<!-- waves -->
+<div class="waves" class="mdl-grid" v-if=" page == '/:user' ">
+
+  <div class="mdl-cell mdl-cell--12-col">
+    <h5>
+      작품
+    </h5>
+  </div>
+
+  <div class="mdl-cell mdl-cell--12-col" v-for=" wave in user.waves ">
+    <div class="mdl-card mdl-shadow--2dp">
+      <div class="mdl-grid">
+
+        <div class="mdl-cell mdl-cell--5-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
+          <div class="mdl-card__title card-img mdl-card--expand" :style=" `background-image: url(${ wave.img })` " @click=" go('/wave') "></div>
+        </div>
+        <div class="mdl-cell mdl-cell--7-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
+          <div class="mdl-card__title-text waves-title">
+            {{ wave.name }}
+          </div>
+          <div class="mdl-card__supporting-text waves-text">
+            {{ wave.dj }}
+          </div>
+          <div class="mdl-card__supporting-text waves-text">
+            {{ wave.dt }}
+          </div>
+          <div class="space"></div>
+          <div class="mdl-card__supporting-text waves-text">
+            {{ wave.desc }}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- end waves -->

@@ -1,0 +1,126 @@
+
+alter table 테이블이름 convert to character set utf8 칼럼이름 utf8_general_ci
+
+CREATE TABLE USER(
+  USER_ID       VARCHAR(20) NOT NULL,
+  USER_TOKEN    VARCHAR(255) NOT NULL,
+  USER_NICKNAME VARCHAR(30) CHARACTER SET UTF8,
+  USER_TYPE     VARCHAR(20),
+  USER_IMG      VARCHAR(100),
+  USER_DT       DATETIME,
+  PRIMARY KEY (USER_ID)
+)DEFAULT CHARSET = UTF8;
+
+CREATE TABLE WAVE(
+  WAVE_ID         INT NOT NULL AUTO_INCREMENT,
+  WAVE_DJ         VARCHAR(20) NOT NULL,
+  WAVE_NAME       VARCHAR(50) CHARACTER SET UTF8 NOT NULL ,
+  WAVE_DESC       VARCHAR(200) CHARACTER SET UTF8,
+  WAVE_LIVE       BOOLEAN NOT NULL,
+  WAVE_IMG        VARCHAR(100) ,
+  WAVE_VIEW       INT NOT NULL,
+  WAVE_DT         DATETIME ,
+  PRIMARY KEY (WAVE_ID),
+  FOREIGN KEY (WAVE_DJ)  REFERENCES USER(USER_ID)
+)DEFAULT CHARSET = UTF8;
+
+CREATE TABLE FILE(
+  FILE_ID       INT NOT NULL AUTO_INCREMENT,
+  WAVE_ID       INT NOT NULL,
+  FILE_NAME     VARCHAR(50) CHARACTER SET UTF8  NOT NULL ,
+  FILE_LINK     VARCHAR(100) NOT NULL,
+  FILE_DT       DATETIME ,
+  PRIMARY KEY (FILE_ID),
+  FOREIGN KEY (WAVE_ID)   REFERENCES WAVE (WAVE_ID)
+)DEFAULT CHARSET = UTF8;
+
+CREATE TABLE CHAT (
+  CHAT_ID         INT NOT NULL AUTO_INCREMENT,
+  USER_ID         VARCHAR(20) NOT NULL,
+  WAVE_ID         INT NOT NULL,
+  CHAT_COMMENT    VARCHAR(100) CHARACTER SET UTF8 NOT NULL,
+  CHAT_DT         DATETIME NOT NULL,
+  PRIMARY KEY (CHAT_ID),
+  FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID),
+  FOREIGN KEY (WAVE_ID) REFERENCES WAVE(WAVE_ID)
+)DEFAULT CHARSET = UTF8;
+
+CREATE TABLE EVENT (
+  EVENT_ID         INT NOT NULL AUTO_INCREMENT,
+  WAVE_ID          INT NOT NULL,
+  FILE_ID            INT NOT NULL,
+  EVENT_TYPE       VARCHAR(20) NOT NULL,
+  EVENT_VALUE      FLOAT NOT NULL,
+  EVENT_TIME       FLOAT NOT NULL,
+  PRIMARY KEY (EVENT_ID, WAVE_ID),
+  FOREIGN KEY (WAVE_ID) REFERENCES WAVE(WAVE_ID),
+  FOREIGN KEY (FILE_ID) REFERENCES FILE(FILE_ID)
+)DEFAULT CHARSET = UTF8;
+
+CREATE TABLE FOLLOW (
+  USER_ID            VARCHAR(20) ,
+  FOLLOW_DJ        VARCHAR(20) NOT NULL,
+  FOLLOW_DT       DATETIME,
+  PRIMARY KEY (USER_ID, FOLLOW_DJ),
+  FOREIGN KEY (USER_ID)  REFERENCES USER (USER_ID),
+  FOREIGN KEY (FOLLOW_DJ) REFERENCES USER (USER_ID)
+)DEFAULT CHARSET = UTF8;
+
+CREATE TABLE  SUPPORT(
+  SUPPORT_ID      INT NOT NULL AUTO_INCREMENT,
+  USER_ID          VARCHAR(20) NOT NULL,
+  SUPPORT_DJ      VARCHAR(20) NOT NULL,
+  SUPPORT_DT      DATETIME ,
+  PRIMARY KEY (SUPPORT_ID),
+  FOREIGN KEY (USER_ID)  REFERENCES USER (USER_ID)
+)DEFAULT CHARSET = UTF8;
+
+
+-----------------------------------------------------------------------
+--USER
+insert into `USER`(`USER_ID`,`USER_TOKEN`,`USER_NICKNAME`,`USER_TYPE`,`USER_IMG`,`USER_DT`) values ('admin','345','admin','admin','/img/user.png','2016-11-26 00:00:00');
+insert into `USER`(`USER_ID`,`USER_TOKEN`,`USER_NICKNAME`,`USER_TYPE`,`USER_IMG`,`USER_DT`) values ('donghyun','321','동현','user','/img/user.png','2016-11-26 00:00:00');
+insert into `USER`(`USER_ID`,`USER_TOKEN`,`USER_NICKNAME`,`USER_TYPE`,`USER_IMG`,`USER_DT`) values ('hyerim','123','혜림','dj','/img/user.png','2016-11-26 00:00:00');
+insert into `USER`(`USER_ID`,`USER_TOKEN`,`USER_NICKNAME`,`USER_TYPE`,`USER_IMG`,`USER_DT`) values ('jonghoon','324','종훈','user','/img/user.png','2016-11-26 00:00:00');
+insert into `USER`(`USER_ID`,`USER_TOKEN`,`USER_NICKNAME`,`USER_TYPE`,`USER_IMG`,`USER_DT`) values ('sangbaek','234','상백','dj','/img/user.png','2016-11-26 00:00:00');
+
+--WAVE
+insert into `WAVE`(`WAVE_ID`,`WAVE_DJ`,`WAVE_NAME`,`WAVE_DESC`,`WAVE_LIVE`,`WAVE_IMG`,`WAVE_VIEW`,`WAVE_DT`) values (5,'hyerim','yo','check it out',1,'/img/album_2.jpg',2352,'2016-11-26 00:00:00');
+insert into `WAVE`(`WAVE_ID`,`WAVE_DJ`,`WAVE_NAME`,`WAVE_DESC`,`WAVE_LIVE`,`WAVE_IMG`,`WAVE_VIEW`,`WAVE_DT`) values (6,'hyerim','this','is a pen',0,'/img/album_3.jpg',1234,'2016-11-26 00:00:00');
+insert into `WAVE`(`WAVE_ID`,`WAVE_DJ`,`WAVE_NAME`,`WAVE_DESC`,`WAVE_LIVE`,`WAVE_IMG`,`WAVE_VIEW`,`WAVE_DT`) values (7,'sangbaek','this','is an apple',0,'/img/skrillex_2.jpg',214,'2016-11-26 00:00:00');
+insert into `WAVE`(`WAVE_ID`,`WAVE_DJ`,`WAVE_NAME`,`WAVE_DESC`,`WAVE_LIVE`,`WAVE_IMG`,`WAVE_VIEW`,`WAVE_DT`) values (8,'sangbaek','uh','apple pen',1,'/img/skrillex_3.jpg',1235,'2016-11-26 00:00:00');
+insert into `WAVE`(`WAVE_ID`,`WAVE_DJ`,`WAVE_NAME`,`WAVE_DESC`,`WAVE_LIVE`,`WAVE_IMG`,`WAVE_VIEW`,`WAVE_DT`) values (9,'hyerim','ppap','pen pineapple apple pen',0,'/img/album_1.jpg',12321,null);
+insert into `WAVE`(`WAVE_ID`,`WAVE_DJ`,`WAVE_NAME`,`WAVE_DESC`,`WAVE_LIVE`,`WAVE_IMG`,`WAVE_VIEW`,`WAVE_DT`) values (10,'sangbaek','ming','mimiming',1,'/img/skrillex_1.png',0,null);
+
+
+--FILE
+
+--CHAT
+
+--EVENT
+
+--FOLLOW
+insert into `FOLLOW`(`USER_ID`,`FOLLOW_DJ`,`FOLLOW_DT`) values ('hyerim','sangbaek','2016-11-26 00:00:00');
+insert into `FOLLOW`(`USER_ID`,`FOLLOW_DJ`,`FOLLOW_DT`) values ('jonghoon','hyerim','2016-11-26 00:00:00');
+insert into `FOLLOW`(`USER_ID`,`FOLLOW_DJ`,`FOLLOW_DT`) values ('jonghoon','sangbaek','2016-11-26 00:00:00');
+insert into `FOLLOW`(`USER_ID`,`FOLLOW_DJ`,`FOLLOW_DT`) values ('sangbaek','hyerim','2016-11-26 00:00:00');
+
+
+--SUPPORT
+insert into `SUPPORT`(`SUPPORT_ID`,`USER_ID`,`SUPPORT_DJ`,`SUPPORT_DT`) values (1,'jonghoon','sangbaek','2016-11-26 00:00:00');
+insert into `SUPPORT`(`SUPPORT_ID`,`USER_ID`,`SUPPORT_DJ`,`SUPPORT_DT`) values (3,'jonghoon','sangbaek','2016-11-25 00:00:00');
+insert into `SUPPORT`(`SUPPORT_ID`,`USER_ID`,`SUPPORT_DJ`,`SUPPORT_DT`) values (4,'jonghoon','hyerim','2016-11-26 00:00:00');
+
+-----------------------------------------------------------------------
+
+//live중인 wave 3개 출력
+SELECT WAVE_DJ, WAVE_NAME, WAVE_DESC, WAVE_LIVE, WAVE_IMG, WAVE_VIEW, WAVE_DT
+FROM WAVE
+WHERE WAVE_LIVE = TRUE
+LIMIT 3;
+
+//제일 view 많은 wave 3개 출력
+SELECT WAVE_DJ, WAVE_NAME, WAVE_DESC, WAVE_LIVE, WAVE_IMG, WAVE_VIEW, WAVE_DT
+FROM WAVE
+ORDER BY WAVE_VIEW DESC
+LIMIT 3;
