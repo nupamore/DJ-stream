@@ -29,7 +29,7 @@
       <img src="/img/user.png" class="img-icon">
 
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" pattern="[ㄱ-힣A-Za-z0-9\-_]*" id="nickname">
+        <input class="mdl-textfield__input" type="text" pattern="[ㄱ-힣A-Za-z0-9\-_]*" id="nickname" v-model=" me.name ">
         <label class="mdl-textfield__label" for="nickname">
           {{ text.nickname }}
         </label>
@@ -37,7 +37,7 @@
           {{ text.regexError }}
         </span>
       </div>
-      <button class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click=" go('/') ">
+      <button class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click=" changeMyInfo() ">
         {{ text.confirmButton }}
       </button>
 

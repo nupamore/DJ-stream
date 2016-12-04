@@ -30,13 +30,12 @@ app.use( '/lib', [
   express.static( `${ __dirname }/node_modules/socket.io-client` ),
 ])
 
-
-// ajax 요청이 아닐 경우 html 전달
 app.use( (req, res, next) => {
-  // 임시
+  // 로그인
   if( req.path == '/login' || req.path == '/login/callback' ){
     next()
   }
+  // ajax 요청이 아닐 경우 html 전달
   else if( !req.get('X-Requested-With') ){
     res.render( `${ __dirname }/view/index.ejs`, {
       user: req.user

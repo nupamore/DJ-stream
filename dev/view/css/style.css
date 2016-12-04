@@ -176,6 +176,17 @@ a {
 .waves .mdl-card__supporting-text.waves-text {
   padding: 0px;
 }
+.waves .mdl-card__live-text {
+  position: absolute;
+  background: #F00;
+  color: #FFF;
+  right: 10px;
+  padding: 3px 5px;
+}
+.waves .right-button {
+  position: absolute;
+  right: 10px;
+}
 
 
 /*
@@ -184,4 +195,12 @@ a {
 #mixer canvas {
   width: 100%;
   height: auto;
+}
+
+
+/*
+  dialog
+ */
+.mdl-dialog {
+  top: 30vh;
 }

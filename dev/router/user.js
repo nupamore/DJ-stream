@@ -1,12 +1,14 @@
 
 // modules
 const express = require('express')
+const bodyParser = require('body-parser');
 const mysql = require('mysql')
 const async = require('async')
 const db = require('../custom_modules/db.js')
 
 
 const router = express.Router()
+router.use(bodyParser.urlencoded({ extended: false }))
 
 const query = {
   //사용자 기본 정보 조회
@@ -32,7 +34,12 @@ const query = {
     FROM USER, WAVE
     WHERE USER.USER_ID = WAVE.WAVE_DJ AND
           WAVE.WAVE_DJ = ?
-    ORDER BY WAVE.WAVE_LIVE DESC;`
+    ORDER BY WAVE.WAVE_LIVE DESC;`,
+  //내 정보 수정
+  updateUser : `
+    UPDATE USER
+    SET USER_NICKNAME = ?
+    WHERE USER_ID = ?`,
 }
 
 
@@ -93,6 +100,23 @@ router.get( '/:userId', (req, res) => {
     res.json( user )
   })
 
+})
+
+
+router.put( '/:userId', (req, res) => {
+  const id = req.session.passport.user.id
+  const name = req.body.name
+
+  const connection = mysql.createConnection( db.connectionInfo )
+  connection.query( query.updateUser, [name, id], ( err, results ) => {
+    if(err){
+      console.log(err)
+      res.sendStatus(400)
+    }
+    else{
+      res.sendStatus(200)
+    }
+  })
 })
 
 
