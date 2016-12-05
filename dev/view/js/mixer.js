@@ -93,6 +93,7 @@ const drawMixer = () => {
       }
       volL = constrain( volL, PI-PI/9, PI+PI/3 )
       //leftLevel = degrees(volL) - 160
+      client.setLeft( volL )
     }
     push()
     translate( width*0.43, height*0.22 )
@@ -122,6 +123,7 @@ const drawMixer = () => {
       }
       volR = constrain( volR, PI-PI/9, PI+PI/3 )
       //rightLevel = degrees(volR) - 160
+      client.setRight( volR )
     }
     push()
     translate( width*0.57, height*0.22 )
@@ -156,9 +158,8 @@ const drawMixer = () => {
     if( DJ && mouseIsPressed && (mouseX > width*0.4) && (mouseX < width*0.6) && (mouseY > height*0.75) && (mouseY < height*0.95)){
       mixX += mouseX-pmouseX
       mixX = constrain( mixX, width*0.43, width*0.57 )
+      client.setMix( mixX )
     }
-
-
     // 커서위치
     fill(255)
     stroke( 0 )
@@ -211,14 +212,22 @@ const drawMixer = () => {
       }
   }
 
-
   function preload() {
     imgL = loadImage(imgLPath)
     imgR = loadImage(imgRPath)
   }
 
+  const mixer = {
+    getLevels( levels ){
+      mixLevel = levels.mix
+      leftLevel = levels.left
+      rightLevel = levels.right
+    }
+  }
 
+  window.mixer = mixer
   window.setup = setup
   window.draw = draw
   window.preload = preload
+
 }
