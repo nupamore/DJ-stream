@@ -1,6 +1,6 @@
 
 const socketClient = ( waveId ) => {
-var socket = io.connect('http://localhost:65007')
+var socket = io.connect('http://203.249.127.60:65007')
   socket.on( 'connect', () =>  {
     //socket.emit('addUser', prompt( '이름을 입력해주세염 ' ), waveId );
     socket.emit('addUser', app.me.name, waveId );
