@@ -117,6 +117,10 @@ a {
   display: block;
   margin: 5px auto;
 }
+.slide .login-button {
+  width: 200px;
+  height: auto;
+}
 
 
 /*

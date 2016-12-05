@@ -62,6 +62,11 @@ router.get( '/me', (req, res) => {
   res.redirect( req.session.passport.user.id )
 })
 
+router.get( '/logout', (req, res) => {
+  req.logout()
+  res.sendStatus(200)
+})
+
 
 /**
  * 유저를 등록한다.
