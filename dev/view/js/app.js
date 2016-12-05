@@ -21,7 +21,9 @@ const app = new Vue({
     page: '/intro',
 
     // 내 정보
-    me: {},
+    me: {
+      name: 'guest'
+    },
 
     // 유저정보
     user: {},
@@ -29,8 +31,18 @@ const app = new Vue({
     // 작품정보들
     waves: [],
 
+    // 작품정보
+    wave: {
+      id: '',
+      name: '',
+      desc: '',
+    },
+
     // 검색키워드
     searchKeyword: '',
+
+    // 모달
+    dialog: '',
 
     // 에러여부
     error: false,
@@ -68,7 +80,8 @@ const app = new Vue({
 
         case '/':
           $( '.slide' ).slideUp()
-          this.getUserInfo( 'hyerim', data => {
+
+          this.getMyInfo( data => {
             this.me = data
 
             this.me.following.forEach( (dj, index) => {
@@ -84,6 +97,7 @@ const app = new Vue({
 
         case '/join':
           $( '#join' ).slideDown()
+
           this.page = page
         break;
 
@@ -110,7 +124,17 @@ const app = new Vue({
           }
           // 작품
           else{
-            this.page = '/:user/:wave'
+            this.go('/wave')
+            setTimeout( () => {
+              history.replaceState( page, '', path )
+            }, 100)
+
+            /*
+            $.ajax( document.location.pathname )
+            .done( data => {
+              this.wave = data
+            })
+            */
           }
         break;
       }
@@ -146,7 +170,7 @@ const app = new Vue({
         }
       })
     },
-    
+
 
     /**
      * 유저 정보를 요청한다.
@@ -157,6 +181,66 @@ const app = new Vue({
       $.ajax( `/${ id }` )
       .done( data => {
         callback( data )
+      })
+    },
+
+
+    /**
+     * 내 정보를 요청한다.
+     * @param {String}  id  아이디
+     * @return {SideEffect}
+     */
+    getMyInfo( callback ){
+      $.ajax( `/me` )
+      .done( data => {
+        callback( data )
+      })
+    },
+
+
+    /**
+     * 내 정보를 수정한다.
+     * @param {String}  id  아이디
+     * @return {SideEffect}
+     */
+    changeMyInfo(){
+      $.ajax({
+        url: `/${ this.me.id }`,
+        method: 'PUT',
+        data: {
+          name: this.me.name
+        }
+      })
+      .done( data => this.go('/') )
+    },
+
+
+    /**
+     * 다이얼로그를 띄운다.
+     * @param {String}  type  종류
+     * @return {SideEffect}
+     */
+    showDialog( type ){
+      this.dialog = type
+      $('dialog')[0].showModal();
+      setTimeout( () => componentHandler.upgradeDom(), 100 )
+    },
+
+
+    /**
+     * 새 작품을 시작한다.
+     * @return {SideEffect}
+     */
+    createWave(){
+      $.ajax({
+        url: `/${ this.me.id }/${ this.wave.name }`,
+        method: 'POST',
+        data: {
+          desc: this.wave.desc
+        }
+      })
+      .done( data => {
+        location.href = `/${ this.me.id }/${ this.wave.name }`
       })
     },
   },
@@ -171,3 +255,6 @@ window.onpopstate = ( event ) => {
 
 // main
 app.go( document.location.href.split( document.location.host )[1] , true )
+app.getMyInfo( data => {
+  app.me = data
+})

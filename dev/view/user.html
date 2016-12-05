@@ -64,8 +64,13 @@
 <div class="waves" class="mdl-grid" v-if=" page == '/:user' ">
 
   <div class="mdl-cell mdl-cell--12-col">
+    <div class="right-button" v-if=" me.id == user.id ">
+      <button @click=" showDialog('createWave') " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+        새 작품
+      </button>
+    </div>
     <h5>
-      작품
+      작품<br><br>
     </h5>
   </div>
 
@@ -77,6 +82,9 @@
           <div class="mdl-card__title card-img mdl-card--expand" :style=" `background-image: url(${ wave.img })` " @click=" go('/wave') "></div>
         </div>
         <div class="mdl-cell mdl-cell--7-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
+          <div class="mdl-card__live-text" v-if=" wave.live ">
+            ON AIR
+          </div>
           <div class="mdl-card__title-text waves-title">
             {{ wave.name }}
           </div>

@@ -1,0 +1,25 @@
+
+<!-- dialog -->
+<dialog class="mdl-dialog">
+
+  <form v-if=" dialog == 'createWave' ">
+    <div class="mdl-dialog__content">
+      <p>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" id="waveName" v-model=" wave.name ">
+          <label class="mdl-textfield__label" for="waveName">제목</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+          <textarea class="mdl-textfield__input" type="text" rows= "3" id="waveDesc" v-model=" wave.desc "></textarea>
+          <label class="mdl-textfield__label" for="waveDesc">설명</label>
+        </div>
+      </p>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button" @click=" createWave() ">시작</button>
+      <button type="button" class="mdl-button close" @click=" $('dialog')[0].close() ">취소</button>
+    </div>
+  </form>
+
+</dialog>
+<!-- end dialog -->

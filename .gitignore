@@ -53,3 +53,5 @@ jspm_packages
 
 # Yarn Integrity file
 .yarn-integrity
+
+dev/custom_modules/secret.js

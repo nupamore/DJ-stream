@@ -13,8 +13,6 @@
   <script src="/lib/material.min.js"></script>
   <script src="/lib/vue.min.js"></script>
   <script src="/lib/socket.io.js"></script>
-  <script src="/lib/p5.min.js"></script>
-  <script src="/lib/addons/p5.dom.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   <!-- custom -->
@@ -31,11 +29,12 @@
   <!-- content -->
   <section id="content" class="mdl-layout__content max-width">
 
+    <%- include('dialog.html') %>
+    <%- include('404.html') %>
+
     <%- include('main.html') %>
     <%- include('user.html') %>
     <%- include('wave.html') %>
-
-    <%- include('404.html') %>
 
   </section>
   <!-- end content -->
@@ -43,6 +42,7 @@
 </div>
 </body>
 
+<script src="/lib/p5.min.js"></script>
 <script src="/js/mixer.js"></script>
 <script src="/js/client.js"></script>
 

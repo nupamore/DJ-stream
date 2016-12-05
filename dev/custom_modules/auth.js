@@ -17,19 +17,14 @@ passport.use(
   },
   (accessToken, refreshToken, profile, done) => {
   	process.nextTick( () => {
-  		//console.log("profile=");
-  		//console.log(profile);
-  		// data to be saved in DB
-  		user = {
-  			name: profile.displayName,
-  			email: profile.emails[0].value,
-  			username: profile.displayName,
-  			provider: 'naver',
-  			naver: profile._json
-  		}
-      console.log( user )
 
-  		return done(null, profile)
+  		user = {
+        id: profile.emails[0].value.split('@')[0],
+  			name: profile.displayName,
+  			provider: 'naver',
+  			token: profile.id
+  		}
+  		return done(null, user)
 	  })
   })
 )
