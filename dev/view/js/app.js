@@ -22,6 +22,7 @@ const app = new Vue({
 
     // 내 정보
     me: {
+      id: 'guest',
       name: 'guest'
     },
 
@@ -81,16 +82,6 @@ const app = new Vue({
         case '/':
           $( '.slide' ).slideUp()
 
-          this.getMyInfo( data => {
-            this.me = data
-
-            this.me.following.forEach( (dj, index) => {
-              this.getUserInfo( dj.name, data => {
-                this.$set( this.me.following[index], data )
-                this.me.following[index] = data
-              })
-            })
-          })
           this.searchKeyword = ''
           this.page = page
         break;
@@ -124,17 +115,15 @@ const app = new Vue({
           }
           // 작품
           else{
-            this.go('/wave')
+            this.go('/wave', true)
             setTimeout( () => {
               history.replaceState( page, '', path )
-            }, 100)
+            }, 10)
 
-            /*
-            $.ajax( document.location.pathname )
+            $.ajax( path )
             .done( data => {
               this.wave = data
             })
-            */
           }
         break;
       }
@@ -276,7 +265,17 @@ app.go( document.location.href.split( document.location.host )[1] , true )
 app.getMyInfo( (data, err) => {
   if( !err ){
     app.me = data
+    app.me.following.forEach( (dj, index) => {
+      app.getUserInfo( dj.name, data => {
+        app.$set( app.me.following[index], data )
+        app.me.following[index] = data
+      })
+    })
   }
+  else{
+    app.go( '/intro' )
+  }
+
   if( app.page == '/wave' ){
     socketClient( 'yo' )
   }

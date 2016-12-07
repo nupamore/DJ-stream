@@ -70,36 +70,46 @@ router.get( '/:userId', (req, res) => {
       })
     }
   ], ( err, results ) => {
-    const info = results[0][0]
-    const follower = results[1]
-    const following = results[2]
-    const wave = results[3]
-
-    const user = {
-      id : info.USER_ID,
-      name : info.USER_NICKNAME,
-      img : info.USER_IMG,
-      dt : info.USER_DT,
-      follower : follower.map( x => ({
-        name : x.myfollower
-      })),
-      following : following.map( x => ({
-        name : x.myfollowing
-      })),
-      waves : wave.map( x => ({
-        id : x.id,
-        dj : x.dj,
-        name : x.name,
-        desc : x.de,
-        img : x.img,
-        view : x.view,
-        live : x.live,
-        dt : x.dt
-      }))
+    if( err ){
+      res.sendStatus(400)
     }
-    res.json( user )
-  })
 
+    else{
+      const info = results[0][0]
+      const follower = results[1]
+      const following = results[2]
+      const wave = results[3]
+
+      if( !info ){
+        res.sendStatus(404)
+      }
+      else{
+        const user = {
+          id : info.USER_ID,
+          name : info.USER_NICKNAME,
+          img : info.USER_IMG,
+          dt : info.USER_DT,
+          follower : follower.map( x => ({
+            name : x.myfollower
+          })),
+          following : following.map( x => ({
+            name : x.myfollowing
+          })),
+          waves : wave.map( x => ({
+            id : x.id,
+            dj : x.dj,
+            name : x.name,
+            desc : x.de,
+            img : x.img,
+            view : x.view,
+            live : x.live,
+            dt : x.dt
+          }))
+        }
+        res.json( user )
+      }
+    }
+  })
 })
 
 
