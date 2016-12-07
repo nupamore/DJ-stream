@@ -16,7 +16,7 @@
       <a class="mdl-navigation__link" @click=" go( `/${ me.id }` ) ">
         {{ text.mypageButton }}
       </a>
-      <a class="mdl-navigation__link">
+      <a class="mdl-navigation__link" v-if=" me.id " @click=" logout() ">
         {{ text.logoutButton }}
       </a>
     </nav>
@@ -36,7 +36,7 @@
     <a class="mdl-navigation__link" @click=" go( `/${ me.id }` ) ">
       {{ text.mypageButton }}
     </a>
-    <a class="mdl-navigation__link">
+    <a class="mdl-navigation__link" v-if=" me.id " @click=" logout() ">
       {{ text.logoutButton }}
     </a>
   </nav>

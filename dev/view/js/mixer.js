@@ -14,13 +14,20 @@ const drawMixer = () => {
   let imgR
   const imgRPath= './img/user2.png'
 
-  const speedVol = 0.05
+  let speedVol
   let volL
   let volR
   let mixX
   let mixY
 
+  let leftLevel
+  let rightLevel
+  let mixLevel
+
+  const DJ = true
+
   function setup() {
+    console.log(DJ)
     noCursor()
     const canvas = createCanvas( 900, 400 )
     canvas.parent('mixer')
@@ -39,12 +46,19 @@ const drawMixer = () => {
     //디스크 회전 관련 변수 초기화
     ringL = 0
     ringR = 0;
+    //볼륨속도초기화
+    speedVol = PI/144
     //볼륨스위치 각도 초기화
-    volL = -5.2
-    volR = -5.2
+    volL = PI-PI/9
+    volR = PI-PI/9
     //mix스위치 위치변수 초기화
     mixX = width*0.5
     mixY = height*0.85
+
+    //리턴되는 level값들 초기화
+    leftLevel = PI-PI/9
+    rightLevel = PI-PI/9
+    mixLevel = mixX
   }
 
   function draw() {
@@ -65,19 +79,25 @@ const drawMixer = () => {
     fill( 250 )
     ellipse( width*0.43, height*0.22, height*0.13, height*0.13 )
 
-    if( mouseIsPressed && (dist(width*0.43, height*0.13, mouseX, mouseY) < height*0.1)){
-      let delta = ( (abs(mouseX-pmouseX) >= abs(mouseY-pmouseY) ) ? mouseX-pmouseX : pmouseY-mouseY )
+    if( DJ && mouseIsPressed && (dist(width*0.43, height*0.13, mouseX, mouseY) < width*0.075)){
+      let deltaY = pmouseY - mouseY
+      if( mouseX > width*0.43 ){
+        deltaY = -deltaY
+      }
+      let delta = ( (abs(mouseX-pmouseX) >= abs(mouseY-pmouseY) ) ? mouseX-pmouseX : deltaY )
       if( delta > 0 ){
         volL += speedVol
       }
       else if ( delta < 0 ){
         volL -= speedVol
       }
-      volL = constrain( volL, -5.2, -3.8 )
+      volL = constrain( volL, PI-PI/9, PI+PI/3 )
+      //leftLevel = degrees(volL) - 160
+      client.setLeft( volL )
     }
     push()
     translate( width*0.43, height*0.22 )
-    rotate( volL%2*PI )
+    rotate( leftLevel%2*PI )
     stroke( 50 )
     strokeWeight( 5 )
     line( height*0.04, 0, height*0.15, 0 )
@@ -89,19 +109,25 @@ const drawMixer = () => {
     ellipse( width*0.57, height*0.22, height*0.15, height*0.15 )
     fill( 250 )
     ellipse( width*0.57, height*0.22, height*0.13, height*0.13 )
-    if( mouseIsPressed && (dist(width*0.57, height*0.22, mouseX, mouseY) < height*0.1)){
-      let delta = ( (abs(mouseX-pmouseX) >= abs(mouseY-pmouseY) ) ? mouseX-pmouseX : pmouseY-mouseY )
+    if( DJ && mouseIsPressed && (dist(width*0.57, height*0.22, mouseX, mouseY) < width*0.075)){
+      let deltaY = pmouseY - mouseY
+      if( mouseX > width*0.57 ){
+        deltaY = -deltaY
+      }
+      let delta = ( (abs(mouseX-pmouseX) >= abs(mouseY-pmouseY) ) ? mouseX-pmouseX : deltaY )
       if( delta > 0 ){
         volR += speedVol
       }
       else if ( delta < 0 ){
         volR -= speedVol
       }
-      volR = constrain( volR, -5.2, -3.8 )
+      volR = constrain( volR, PI-PI/9, PI+PI/3 )
+      //rightLevel = degrees(volR) - 160
+      client.setRight( volR )
     }
     push()
     translate( width*0.57, height*0.22 )
-    rotate( volR%2*PI )
+    rotate( rightLevel%2*PI )
     stroke( 50 )
     strokeWeight( 5 )
     line( height*0.04, 0, height*0.15, 0 )
@@ -128,13 +154,12 @@ const drawMixer = () => {
     rect( width*0.5, height*0.85, width*0.16, height*0.01)
     //스위치
     fill( 255 )
-    rect( mixX, mixY, width*0.025, height*0.1 )
-    if( mouseIsPressed && (mouseX > width*0.4) && (mouseX < width*0.6) && (mouseY > height*0.75) && (mouseY < height*0.95)){
+    rect( mixLevel, mixY, width*0.025, height*0.1 )
+    if( DJ && mouseIsPressed && (mouseX > width*0.4) && (mouseX < width*0.6) && (mouseY > height*0.75) && (mouseY < height*0.95)){
       mixX += mouseX-pmouseX
       mixX = constrain( mixX, width*0.43, width*0.57 )
+      client.setMix( mixX )
     }
-
-
     // 커서위치
     fill(255)
     stroke( 0 )
@@ -187,14 +212,22 @@ const drawMixer = () => {
       }
   }
 
-
   function preload() {
     imgL = loadImage(imgLPath)
     imgR = loadImage(imgRPath)
   }
 
+  const mixer = {
+    getLevels( levels ){
+      mixLevel = levels.mix
+      leftLevel = levels.left
+      rightLevel = levels.right
+    }
+  }
 
+  window.mixer = mixer
   window.setup = setup
   window.draw = draw
   window.preload = preload
+
 }

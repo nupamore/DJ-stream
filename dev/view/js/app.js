@@ -109,7 +109,7 @@ const app = new Vue({
         case '/wave':
           this.page = page
           drawMixer()
-          socketClient( 'yo' )
+          //socketClient( 'yo' )
         break;
 
         default:
@@ -195,6 +195,9 @@ const app = new Vue({
       .done( data => {
         callback( data )
       })
+      .fail( data => {
+        callback( data, true )
+      })
     },
 
 
@@ -228,6 +231,21 @@ const app = new Vue({
 
 
     /**
+     * 로그아웃
+     * @param {String}  type  종류
+     * @return {SideEffect}
+     */
+    logout(){
+      $.ajax( '/logout' )
+      .done( data => {
+        this.me = {
+          name: 'guest'
+        }
+      })
+    },
+
+
+    /**
      * 새 작품을 시작한다.
      * @return {SideEffect}
      */
@@ -255,6 +273,11 @@ window.onpopstate = ( event ) => {
 
 // main
 app.go( document.location.href.split( document.location.host )[1] , true )
-app.getMyInfo( data => {
-  app.me = data
+app.getMyInfo( (data, err) => {
+  if( !err ){
+    app.me = data
+  }
+  if( app.page == '/wave' ){
+    socketClient( 'yo' )
+  }
 })
