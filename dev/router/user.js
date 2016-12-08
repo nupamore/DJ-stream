@@ -70,6 +70,7 @@ router.get( '/:userId', (req, res) => {
       })
     }
   ], ( err, results ) => {
+    connection.end()
     if( err ){
       res.sendStatus(400)
     }
