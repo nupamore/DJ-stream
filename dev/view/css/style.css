@@ -75,6 +75,11 @@ a {
   cursor: pointer;
 }
 
+.right-button {
+  position: absolute;
+  right: 10px;
+}
+
 
 /*
   header
@@ -195,10 +200,7 @@ header h1 {
   right: 10px;
   padding: 3px 5px;
 }
-.waves .right-button {
-  position: absolute;
-  right: 10px;
-}
+
 
 
 /*
