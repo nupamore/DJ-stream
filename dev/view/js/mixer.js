@@ -201,16 +201,13 @@ const drawMixer = () => {
       }
     pop()
 
-    if( mixer.getDJ() ){
-      if( !( mouseIsPressed && dist(diskLx, diskLy, mouseX, mouseY) < height*0.3) ) {
-        ringL += speedL
-      }
-      if( !( mouseIsPressed && dist(diskRx, diskRy, mouseX, mouseY) < height*0.3) ) {
-        ringR += speedR
-      }
-    }
-    else {
+    const clickedL = mouseIsPressed && dist(diskLx, diskLy, mouseX, mouseY) < height*0.3
+    const clickedR = mouseIsPressed && dist(diskRx, diskRy, mouseX, mouseY) < height*0.3
+
+    if( !(mixer.getDJ() && clickedL) ){
       ringL += speedL
+    }
+    if( !(mixer.getDJ() && clickedR) ){
       ringR += speedR
     }
   }
