@@ -24,7 +24,7 @@ const drawMixer = () => {
   let rightLevel
   let mixLevel
 
-  const DJ = true
+  let DJ
 
   function setup() {
     console.log(DJ)
@@ -222,6 +222,9 @@ const drawMixer = () => {
       mixLevel = levels.mix
       leftLevel = levels.left
       rightLevel = levels.right
+    },
+    getDJ( state ){
+      DJ = state
     }
   }
 
