@@ -1,9 +1,15 @@
 
 const socketClient = ( waveId ) => {
-var socket = io.connect('http://203.249.127.60:65007')
+var socket = io.connect('http://localhost:65007')
   socket.on( 'connect', () =>  {
     //socket.emit('addUser', prompt( '이름을 입력해주세염 ' ), waveId );
     socket.emit('addUser', app.me.name, waveId );
+    if( app.me.name == waveId ){
+      mixer.getDJ( true )
+    }
+    else{
+      mixer.getDJ( false )
+    }
   });
 
   socket.on( 'updateUser', ( userNames ) => {
@@ -20,6 +26,7 @@ var socket = io.connect('http://203.249.127.60:65007')
   socket.on( 'getLevels', ( levels ) => {
     mixer.getLevels( levels )
   })
+
 
   $( function() {
     $('#datasend').click( () => {
