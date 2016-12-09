@@ -17,11 +17,13 @@ app.use(
     secret: 'DJ-stream'
   })
 )
-app.use( auth.passport.initialize() )
+app.use( auth.passport.initialize(nn) )
 app.use( auth.passport.session() )
 
 // express static
+//
 app.use( express.static(`${ __dirname }/view`) )
+app.use( '/files', express.static(`${ __dirname }/files`) )
 app.use( '/lib', [
   express.static( `${ __dirname }/node_modules/jquery/dist` ),
   express.static( `${ __dirname }/node_modules/material-design-lite` ),
