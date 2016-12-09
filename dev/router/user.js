@@ -13,7 +13,7 @@ router.use(bodyParser.urlencoded({ extended: false }))
 const query = {
   //사용자 기본 정보 조회
   myInfo : `
-    SELECT USER_ID, USER_NICKNAME, USER_IMG, USER_DT
+    SELECT USER_ID, USER_NICKNAME, USER_IMG, DATE_FORMAT(USER_DT, '%Y/%m/%d') USER_DT
     FROM USER
     WHERE USER_ID = ?; `,
   //나를 팔로우한 사용자 조회
@@ -35,6 +35,21 @@ const query = {
     WHERE USER.USER_ID = WAVE.WAVE_DJ AND
           WAVE.WAVE_DJ = ?
     ORDER BY WAVE.WAVE_LIVE DESC;`,
+  //후원 조회
+  mySupport : `
+    SELECT u.USER_ID, u.USER_NICKNAME, d.DJ_ID, d.DJ_NICKNAME, DATE_FORMAT(d.DT, '%Y/%m/%d') DT
+    FROM ( SELECT USER.USER_NICKNAME AS DJ_NICKNAME, USER.USER_ID AS DJ_ID, SUPPORT.SUPPORT_ID AS SUPPORT_ID, SUPPORT.SUPPORT_DT AS DT
+        FROM USER, SUPPORT
+        WHERE USER.USER_ID = SUPPORT.SUPPORT_DJ
+      ) AS d,
+      ( SELECT USER.USER_NICKNAME AS USER_NICKNAME, USER.USER_ID AS USER_ID, SUPPORT.SUPPORT_ID AS SUPPORT_ID
+        FROM USER, SUPPORT
+        WHERE USER.USER_ID = SUPPORT.USER_ID
+      ) AS u
+    WHERE u.SUPPORT_ID = d.SUPPORT_ID
+      AND (u.USER_ID = ? OR d.DJ_ID = ?)
+    ORDER BY d.DT DESC
+    LIMIT 5; `,
   //내 정보 수정
   updateUser : `
     UPDATE USER
@@ -68,6 +83,11 @@ router.get( '/:userId', (req, res) => {
       connection.query( query.myWave, [id], ( err, rows, fields ) => {
         callback( err, rows )
       })
+    },
+    callback => {
+      connection.query( query.mySupport, [id, id], ( err, rows, fields ) => {
+        callback( err, rows )
+      })
     }
   ], ( err, results ) => {
     connection.end()
@@ -80,6 +100,7 @@ router.get( '/:userId', (req, res) => {
       const follower = results[1]
       const following = results[2]
       const wave = results[3]
+      const support = results[4]
 
       if( !info ){
         res.sendStatus(404)
@@ -96,6 +117,15 @@ router.get( '/:userId', (req, res) => {
           following : following.map( x => ({
             name : x.myfollowing
           })),
+          support : support.map( x => {
+            const give = info.USER_ID == x.USER_ID
+            return {
+              id: give ? x.DJ_ID : x.USER_ID,
+              name: give ? x.DJ_NICKNAME : x.USER_NICKNAME,
+              give,
+              dt: x.DT
+            }
+          }),
           waves : wave.map( x => ({
             id : x.id,
             dj : x.dj,

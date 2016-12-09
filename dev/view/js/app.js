@@ -100,7 +100,6 @@ const app = new Vue({
         case '/wave':
           this.page = page
           drawMixer()
-          //socketClient( 'yo' )
         break;
 
         default:
@@ -230,6 +229,32 @@ const app = new Vue({
         this.me = {
           name: 'guest'
         }
+        this.go( '/intro' )
+      })
+    },
+
+
+    /**
+     * 팔로우를 요청하거나 취소한다.
+     * @param {String}  id  대상 id
+     * @param {Boolean} add 추가 or 취소
+     * @return {SideEffect}
+     */
+    follow( id, add ){
+      $.ajax({
+        url: '/follow',
+        method: add ? 'POST' : 'DELETE',
+        data: {
+          id
+        }
+      })
+      .done( data => {
+        this.getMyInfo( data => {
+          this.me = data
+        })
+        this.getUserInfo( this.user.id, (data) => {
+          this.user = data
+        })
       })
     },
 

@@ -32,10 +32,10 @@
           <div class="mdl-card__title card-img mdl-card--expand" :style=" `background-image: url(${ wave.img })` " @click=" location.href = `/${ wave.dj }/${ wave.name }` "></div>
         </div>
         <div class="mdl-cell mdl-cell--7-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
-          <div class="mdl-card__title-text waves-title">
+          <div class="mdl-card__title-text waves-title" @click=" location.href = `/${ wave.dj }/${ wave.name }` ">
             {{ wave.name }}
           </div>
-          <div class="mdl-card__supporting-text waves-text">
+          <div class="mdl-card__supporting-text waves-text waves-dj" @click=" location.href = `/${ wave.dj }/${ wave.name }` ">
             {{ wave.dj }}
           </div>
           <div class="mdl-card__supporting-text waves-text">
@@ -71,7 +71,7 @@
         <div class="mdl-card__live-text" v-if=" wave.live ">
           ON AIR
         </div>
-        <div class="mdl-card__title-text">
+        <div class="mdl-card__title-text" @click=" location.href = `/${ wave.dj }/${ wave.name }` ">
           {{ wave.name }}
         </div>
         <span class="mdl-card__dt-text">
