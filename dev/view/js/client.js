@@ -4,12 +4,6 @@ var socket = io.connect('http://localhost:65007')
   socket.on( 'connect', () =>  {
     //socket.emit('addUser', prompt( '이름을 입력해주세염 ' ), waveId );
     socket.emit('addUser', app.me.name, waveId );
-    if( app.me.name == waveId ){
-      mixer.getDJ( true )
-    }
-    else{
-      mixer.getDJ( false )
-    }
   });
 
   socket.on( 'updateUser', ( userNames ) => {
