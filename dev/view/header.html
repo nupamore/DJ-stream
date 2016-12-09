@@ -5,9 +5,9 @@
 
     <!-- title -->
     <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
-    <h1 class="mdl-layout-title">
-      {{ text.title }}
-    </h1>
+      <h1 class="mdl-layout-title" @click=" go('/') ">
+        {{ text.title }}
+      </h1>
     <div class="mdl-layout-spacer"></div>
 
     <!-- user nav -->
@@ -28,13 +28,10 @@
   <!-- user nav -->
   <nav class="mdl-navigation">
     <img class="img-icon" :src=" me.img ">
-    <a class="mdl-navigation__link">
+    <a class="mdl-navigation__link" @click=" go( `/${ me.id }` ) ">
       <h5>
         {{ me.name }}
       </h5>
-    </a>
-    <a class="mdl-navigation__link" @click=" go( `/${ me.id }` ) ">
-      {{ text.mypageButton }}
     </a>
     <a class="mdl-navigation__link" v-if=" me.id " @click=" logout() ">
       {{ text.logoutButton }}

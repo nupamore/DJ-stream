@@ -28,6 +28,15 @@
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center;
+  cursor: pointer;
+}
+
+.mdl-card__title-text {
+  cursor: pointer;
+}
+
+.link {
+  cursor: pointer;
 }
 
 
@@ -72,6 +81,19 @@ span.space {
 }
 
 a {
+  cursor: pointer;
+}
+
+.right-button {
+  position: absolute;
+  right: 10px;
+}
+
+
+/*
+  header
+*/
+header h1 {
   cursor: pointer;
 }
 
@@ -177,6 +199,10 @@ a {
 .waves .waves-title {
   color: rgb(28, 98, 181);
 }
+.waves .waves-dj {
+  color: rgb(28, 98, 181);
+  cursor: pointer;
+}
 .waves .mdl-card__supporting-text.waves-text {
   padding: 0px;
 }
@@ -187,10 +213,7 @@ a {
   right: 10px;
   padding: 3px 5px;
 }
-.waves .right-button {
-  position: absolute;
-  right: 10px;
-}
+
 
 
 /*

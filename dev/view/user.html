@@ -9,6 +9,16 @@
     <div class="mdl-card__title card-img mdl-card--expand" :style=" `background-image: url(${ user.img })` "></div>
   </div>
   <div class="mdl-cell mdl-cell--7-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
+    <div class="right-button" v-if=" me.id != user.id ">
+
+      <button v-if=" !me.following || !me.following.filter( _ => _.id == user.id).length " @click=" follow( user.id, true ) " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+        팔로우
+      </button>
+      <button v-if=" me.following && me.following.filter( _ => _.id == user.id).length "@click=" follow( user.id, false ) " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+        언팔로우
+      </button>
+
+    </div>
     <div class="mdl-card__title-text search-title">
       {{ user.name }}
     </div>
@@ -29,15 +39,15 @@
           <div class="mdl-list__item" v-for=" dj in user.following ">
             <span class="mdl-list__item-primary-content">
               <i class="material-icons mdl-list__item-avatar">person</i>
-              <span>
+              <span class="link" @click=" go( `/${ dj.name }` ) ">
                 {{ dj.name }}
               </span>
             </span>
-            <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">close</i></a>
           </div>
 
         </div>
       </div>
+
       <div class="mdl-cell mdl-cell--6-col">
         <h5>
           팔로워
@@ -47,9 +57,34 @@
           <div class="mdl-list__item" v-for=" dj in user.follower ">
             <span class="mdl-list__item-primary-content">
               <i class="material-icons mdl-list__item-avatar">person</i>
-              <span>
+              <span class="link" @click=" go( `/${ dj.name }` ) ">
                 {{ dj.name }}
               </span>
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="mdl-cell mdl-cell--12-col" v-if=" me.id == user.id ">
+        <h5>
+          최근 후원
+        </h5>
+        <div class="demo-list-action mdl-list">
+
+          <div class="mdl-list__item" v-for=" support in user.support ">
+            <span class="mdl-list__item-primary-content">
+              <div class="right-button">
+                {{ support.dt }}
+              </div>
+              <span>
+                {{ support.name }}
+              </span>
+              {{
+                support.give
+                  ? '님에게 후원하였습니다.'
+                  : '님으로부터 후원받았습니다.'
+              }}
             </span>
           </div>
 
@@ -79,17 +114,14 @@
       <div class="mdl-grid">
 
         <div class="mdl-cell mdl-cell--5-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
-          <div class="mdl-card__title card-img mdl-card--expand" :style=" `background-image: url(${ wave.img })` " @click=" go(`/${ wave.dj }/${ wave.name }`) "></div>
+          <div class="mdl-card__title card-img mdl-card--expand" :style=" `background-image: url(${ wave.img })` " @click=" location.href = `/${ wave.dj }/${ wave.name }` "></div>
         </div>
         <div class="mdl-cell mdl-cell--7-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
           <div class="mdl-card__live-text" v-if=" wave.live ">
             ON AIR
           </div>
-          <div class="mdl-card__title-text waves-title">
+          <div class="mdl-card__title-text waves-title" @click=" location.href = `/${ wave.dj }/${ wave.name }` ">
             {{ wave.name }}
-          </div>
-          <div class="mdl-card__supporting-text waves-text">
-            {{ wave.dj }}
           </div>
           <div class="mdl-card__supporting-text waves-text">
             {{ wave.dt }}

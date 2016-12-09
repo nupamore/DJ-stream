@@ -59,7 +59,12 @@ router.get( '/login/callback',
 )
 
 router.get( '/me', (req, res) => {
-  res.redirect( req.session.passport.user.id )
+  if( req.session.passport ){
+    res.redirect( req.session.passport.user.id )
+  }
+  else{
+    res.redirect( '/' )
+  }
 })
 
 router.get( '/logout', (req, res) => {
