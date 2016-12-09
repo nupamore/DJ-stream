@@ -17,7 +17,7 @@ app.use(
     secret: 'DJ-stream'
   })
 )
-app.use( auth.passport.initialize(nn) )
+app.use( auth.passport.initialize() )
 app.use( auth.passport.session() )
 
 // express static
