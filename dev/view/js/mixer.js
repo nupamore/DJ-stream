@@ -24,10 +24,7 @@ const drawMixer = () => {
   let rightLevel
   let mixLevel
 
-  let DJ
-
   function setup() {
-    console.log(DJ)
     noCursor()
     const canvas = createCanvas( 900, 400 )
     canvas.parent('mixer')
@@ -79,7 +76,7 @@ const drawMixer = () => {
     fill( 250 )
     ellipse( width*0.43, height*0.22, height*0.13, height*0.13 )
 
-    if( DJ && mouseIsPressed && (dist(width*0.43, height*0.13, mouseX, mouseY) < width*0.075)){
+    if( mixer.getDJ() && mouseIsPressed && (dist(width*0.43, height*0.13, mouseX, mouseY) < width*0.075)){
       let deltaY = pmouseY - mouseY
       if( mouseX > width*0.43 ){
         deltaY = -deltaY
@@ -109,7 +106,7 @@ const drawMixer = () => {
     ellipse( width*0.57, height*0.22, height*0.15, height*0.15 )
     fill( 250 )
     ellipse( width*0.57, height*0.22, height*0.13, height*0.13 )
-    if( DJ && mouseIsPressed && (dist(width*0.57, height*0.22, mouseX, mouseY) < width*0.075)){
+    if( mixer.getDJ() && mouseIsPressed && (dist(width*0.57, height*0.22, mouseX, mouseY) < width*0.075)){
       let deltaY = pmouseY - mouseY
       if( mouseX > width*0.57 ){
         deltaY = -deltaY
@@ -155,7 +152,7 @@ const drawMixer = () => {
     //스위치
     fill( 255 )
     rect( mixLevel, mixY, width*0.025, height*0.1 )
-    if( DJ && mouseIsPressed && (mouseX > width*0.4) && (mouseX < width*0.6) && (mouseY > height*0.75) && (mouseY < height*0.95)){
+    if( mixer.getDJ() && mouseIsPressed && (mouseX > width*0.4) && (mouseX < width*0.6) && (mouseY > height*0.75) && (mouseY < height*0.95)){
       mixX += mouseX-pmouseX
       mixX = constrain( mixX, width*0.43, width*0.57 )
       client.setMix( mixX )
@@ -223,8 +220,8 @@ const drawMixer = () => {
       leftLevel = levels.left
       rightLevel = levels.right
     },
-    getDJ( state ){
-      DJ = state
+    getDJ(){
+      return app.wave.dj == app.me.id
     }
   }
 
