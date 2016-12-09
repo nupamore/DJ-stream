@@ -210,15 +210,25 @@ const app = new Vue({
     /**
      * 다이얼로그를 띄운다.
      * @param {String}  type  종류
+     * @param {Object}  params
      * @return {SideEffect}
      */
-    showDialog( type ){
+    showDialog( type, params ){
       this.dialog = type
 
       switch( type ){
         case 'createWave':
           this.wave.name = '',
           this.wave.desc = ''
+        break;
+
+        case 'editWave':
+          this.wave = params
+          this.wave.oldName = params.name
+        break;
+
+        case 'deleteWave':
+          this.wave = params
         break;
       }
 
@@ -282,7 +292,7 @@ const app = new Vue({
         }
       })
       .done( data => {
-        $('#chat').append( `[ <b>${ this.me.name }</b>님이 후원하였습니다!!` )
+        $('#chat').append( `[ <b>${ this.me.name }</b>님이 후원하였습니다!! ]` )
       })
     },
 
@@ -301,6 +311,48 @@ const app = new Vue({
       })
       .done( data => {
         location.href = `/${ this.me.id }/${ this.wave.name }`
+      })
+    },
+
+
+    /**
+     * 작품을 수정한다.
+     * @param {String}  waveName  작품이름
+     * @return {SideEffect}
+     */
+    editWave( waveName ){
+      $.ajax({
+        url: `/${ this.me.id }/${ waveName }`,
+        method: 'PUT',
+        data: {
+          name: this.wave.name,
+          desc: this.wave.desc
+        }
+      })
+      .done( data => {
+        this.getUserInfo( this.user.id, (data) => {
+          this.user = data
+          $('dialog')[0].close()
+        })
+      })
+    },
+
+
+    /**
+     * 작품을 삭제한다.
+     * @param {String}  waveName  작품이름
+     * @return {SideEffect}
+     */
+    deleteWave( waveName ){
+      $.ajax({
+        url: `/${ this.me.id }/${ waveName }`,
+        method: 'DELETE',
+      })
+      .done( data => {
+        this.getUserInfo( this.user.id, (data) => {
+          this.user = data
+          $('dialog')[0].close()
+        })
       })
     },
   },

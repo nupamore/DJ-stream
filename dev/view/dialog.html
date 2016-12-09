@@ -2,7 +2,7 @@
 <!-- dialog -->
 <dialog class="mdl-dialog">
 
-  <form v-if=" dialog == 'createWave' ">
+  <form v-if=" dialog == 'createWave' || dialog == 'editWave' ">
     <div class="mdl-dialog__content">
       <p>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -19,10 +19,24 @@
       </p>
     </div>
     <div class="mdl-dialog__actions">
-      <button type="button" class="mdl-button" @click=" createWave() ">시작</button>
+      <button type="button" class="mdl-button" @click=" createWave() " v-if=" dialog == 'createWave' ">시작</button>
+      <button type="button" class="mdl-button" @click=" editWave( wave.oldName ) " v-if=" dialog == 'editWave' ">수정</button>
       <button type="button" class="mdl-button close" @click=" $('dialog')[0].close() ">취소</button>
     </div>
   </form>
+
+  <form v-if=" dialog == 'deleteWave' ">
+    <div class="mdl-dialog__content">
+      <p>
+        정말 삭제하시겠습니까?
+      </p>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button" @click=" deleteWave( wave.name ) ">삭제</button>
+      <button type="button" class="mdl-button close" @click=" $('dialog')[0].close() ">취소</button>
+    </div>
+  </form>
+
 
 </dialog>
 <!-- end dialog -->
