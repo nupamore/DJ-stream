@@ -11,6 +11,9 @@
   <div class="mdl-cell mdl-cell--7-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
     <div class="right-button" v-if=" me.id != user.id ">
 
+      <button v-if=" me.id == user.id " @click=" go( '/join' ) " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+        정보 수정
+      </button>
       <button v-if=" !me.following || !me.following.filter( _ => _.id == user.id).length " @click=" follow( user.id, true ) " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
         팔로우
       </button>
@@ -18,6 +21,11 @@
         언팔로우
       </button>
 
+    </div>
+    <div class="right-button" v-if=" me.id == user.id ">
+      <button v-if=" me.id == user.id " @click=" go( '/join' ) " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+        정보 수정
+      </button>
     </div>
     <div class="mdl-card__title-text search-title">
       {{ user.name }}
@@ -130,6 +138,11 @@
           <div class="mdl-card__supporting-text waves-text">
             {{ wave.desc }}
           </div>
+        </div>
+
+        <div class="waves-menu">
+          <i class="material-icons" @click=" showDialog( 'editWave', wave ) ">mode_edit</i>
+          <i class="material-icons" @click=" showDialog( 'deleteWave' wave ) ">close</i>
         </div>
 
       </div>

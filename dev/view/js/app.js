@@ -110,6 +110,7 @@ const app = new Vue({
             this.getUserInfo( params[1], data => {
               this.user = data
               this.page = '/:user'
+              $( '#join' ).slideUp()
             })
           }
           // 작품
@@ -202,7 +203,7 @@ const app = new Vue({
           name: this.me.name
         }
       })
-      .done( data => this.go('/') )
+      .done( data => this.go(`/${ this.me.id }`) )
     },
 
 
@@ -213,6 +214,14 @@ const app = new Vue({
      */
     showDialog( type ){
       this.dialog = type
+
+      switch( type ){
+        case 'createWave':
+          this.wave.name = '',
+          this.wave.desc = ''
+        break;
+      }
+
       $('dialog')[0].showModal();
       setTimeout( () => componentHandler.upgradeDom(), 100 )
     },
@@ -255,6 +264,25 @@ const app = new Vue({
         this.getUserInfo( this.user.id, (data) => {
           this.user = data
         })
+      })
+    },
+
+
+    /**
+     * 후원하기
+     * @param {String}  id  대상 id
+     * @return {SideEffect}
+     */
+    support( id ){
+      $.ajax({
+        url: '/support',
+        method: 'POST',
+        data: {
+          id
+        }
+      })
+      .done( data => {
+        $('#chat').append( `[ <b>${ this.me.name }</b>님이 후원하였습니다!!` )
       })
     },
 
