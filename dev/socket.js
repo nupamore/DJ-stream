@@ -34,8 +34,6 @@ exports.listen = ( http ) => {
     socket.on( 'addUser', ( userName, waveId ) => {
       socket.userName = userName
       socket.room = waveId
-      console.log('socket.userName : '+  socket.userName )
-      console.log('socket.room : '+  socket.room )
       userNames.push(userName)
       socket.join( socket.room )
       io.sockets.in( socket.room ).emit( 'chat', 'SERVER', socket.userName + '님이 입장하셨습니다. ')
@@ -43,21 +41,19 @@ exports.listen = ( http ) => {
 
       const connection = mysql.createConnection( db.connectionInfo )
       connection.query( query.findWave, [ socket.room ], ( err, rows, fields ) => {
-        if( err || rows ) {
+        if( err || !rows ) {
           console.log(err)
         }
         else {
           socket.waveID = rows[0].WAVE_ID
-          console.log('socket.room : '+  socket.waveID )
 
         }
       })
       connection.query( query.findUser, [ socket.userName ], ( err, rows, fields ) => {
-        if( err || rows ) {
+        if( err || !rows ) {
           console.log(err)
         }
         else {
-          console.log(socket.userName)
           socket.userID = rows[0].USER_ID
         }
       })

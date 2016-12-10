@@ -117,10 +117,16 @@ const app = new Vue({
               history.replaceState( page, '', path )
             }, 10)
 
-            $.ajax( path )
-            .done( data => {
-              this.wave = data
-              socketClient( app.me.name, data.name )
+            this.getMyInfo( (data, err) => {
+              if( err ){
+                console.log( err )
+              }
+              
+              $.ajax( path )
+              .done( data => {
+                this.wave = data
+                socketClient( this.wave.name )
+              })
             })
           }
         break;
