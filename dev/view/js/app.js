@@ -224,7 +224,11 @@ const app = new Vue({
 
         case 'editWave':
           this.wave = params
-          this.wave.oldName = params.name
+          this.wave.old = {
+            name: params.name,
+            desc: params.name,
+            img: params.name,
+          }
         break;
 
         case 'deleteWave':
@@ -322,18 +326,34 @@ const app = new Vue({
      */
     editWave( waveName ){
       $.ajax({
-        url: `/${ this.me.id }/${ waveName }`,
+        url: `/${ this.me.id }/${ this.wave.old.name }`,
         method: 'PUT',
-        data: {
-          name: this.wave.name,
-          desc: this.wave.desc
-        }
+        data: this.wave
       })
       .done( data => {
         this.getUserInfo( this.user.id, (data) => {
           this.user = data
           $('dialog')[0].close()
         })
+      })
+    },
+
+
+    /**
+     * 작품을 저장한다.
+     * @param {String}  waveName  작품이름
+     * @return {SideEffect}
+     */
+    saveWave(){
+      this.wave.live = false;
+
+      $.ajax({
+        url: `/${ this.me.id }/${ this.wave.name }`,
+        method: 'PUT',
+        data: this.wave
+      })
+      .done( data => {
+        this.go( '/me' )
       })
     },
 

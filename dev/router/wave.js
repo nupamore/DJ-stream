@@ -23,7 +23,7 @@ const query = {
   // 작품 수정
   updateWave : `
     UPDATE WAVE
-    SET WAVE_NAME = ?, WAVE_DESC = ?
+    SET WAVE_NAME = ?, WAVE_DESC = ?, WAVE_LIVE = ?
     WHERE WAVE_DJ = ?
       AND WAVE_NAME = ?`,
   // 작품 삭제
@@ -50,6 +50,7 @@ router.get( '/:userId/:waveName', (req, res) => {
         dj: x.WAVE_DJ,
         name: x.WAVE_NAME,
         desc: x.WAVE_DESC,
+        live: x.WAVE_LIVE,
       }))[0]
       res.send( wave )
     }
@@ -74,13 +75,15 @@ router.post( '/:userId/:waveName', (req, res) => {
 })
 
 router.put( '/:userId/:waveName', (req, res) => {
+  console.log(req.body)
   const dj = req.params.userId
   const oldName = req.params.waveName
-  const newName = req.body.name
-  const newDesc = req.body.desc
+  const newName = req.body.name || req.body.old.name
+  const desc = req.body.desc || req.body.old.desc
+  const live = req.body.live || req.body.old.live
 
   const connection = mysql.createConnection( db.connectionInfo )
-  connection.query( query.updateWave, [newName, newDesc, dj, oldName], ( err, result ) => {
+  connection.query( query.updateWave, [newName, desc, live, dj, oldName], ( err, result ) => {
     if( err ) {
       console.log(err)
       res.sendStatus( 400 )

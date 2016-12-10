@@ -20,7 +20,7 @@
     </div>
     <div class="mdl-dialog__actions">
       <button type="button" class="mdl-button" @click=" createWave() " v-if=" dialog == 'createWave' ">시작</button>
-      <button type="button" class="mdl-button" @click=" editWave( wave.oldName ) " v-if=" dialog == 'editWave' ">수정</button>
+      <button type="button" class="mdl-button" @click=" editWave( wave.old.name ) " v-if=" dialog == 'editWave' ">수정</button>
       <button type="button" class="mdl-button close" @click=" $('dialog')[0].close() ">취소</button>
     </div>
   </form>
