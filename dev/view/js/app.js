@@ -21,10 +21,7 @@ const app = new Vue({
     page: '/intro',
 
     // 내 정보
-    me: {
-      id: 'guest',
-      name: 'guest'
-    },
+    me: {},
 
     // 유저정보
     user: {},
@@ -120,9 +117,16 @@ const app = new Vue({
               history.replaceState( page, '', path )
             }, 10)
 
-            $.ajax( path )
-            .done( data => {
-              this.wave = data
+            this.getMyInfo( (data, err) => {
+              if( err ){
+                console.log( err )
+              }
+              
+              $.ajax( path )
+              .done( data => {
+                this.wave = data
+                socketClient( this.wave.name )
+              })
             })
           }
         break;
@@ -446,9 +450,5 @@ app.getMyInfo( (data, err) => {
   }
   else{
     app.go( '/intro' )
-  }
-
-  if( app.page == '/wave' ){
-    socketClient( 'yo' )
   }
 })
