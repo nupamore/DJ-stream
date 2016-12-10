@@ -107,6 +107,7 @@ const app = new Vue({
             this.getUserInfo( params[1], data => {
               this.user = data
               this.page = '/:user'
+              $( '#join' ).slideUp()
             })
           }
           // 작품
@@ -200,19 +201,64 @@ const app = new Vue({
           name: this.me.name
         }
       })
-      .done( data => this.go('/') )
+      .done( data => this.go(`/${ this.me.id }`) )
     },
 
 
     /**
      * 다이얼로그를 띄운다.
      * @param {String}  type  종류
+     * @param {Object}  params
      * @return {SideEffect}
      */
-    showDialog( type ){
+    showDialog( type, params ){
       this.dialog = type
+
+      switch( type ){
+        case 'createWave':
+          this.wave.name = '',
+          this.wave.desc = ''
+        break;
+
+        case 'editWave':
+          this.wave = params
+          this.wave.old = {
+            name: params.name,
+            desc: params.name,
+            img: params.name,
+          }
+        break;
+
+        case 'deleteWave':
+          this.wave = params
+        break;
+      }
+
       $('dialog')[0].showModal();
       setTimeout( () => componentHandler.upgradeDom(), 100 )
+    },
+
+
+    /**
+     * 스낵바를 띄운다.
+     * @param {String}  type  종류
+     * @param {Object}  params
+     * @return {SideEffect}
+     */
+    showSnackbar( type, params ){
+      const data = {
+        'update': {
+          message: '변경되었습니다'
+        },
+        'delete': {
+          message: '삭제되었습니다'
+        },
+        'save': {
+          message: '저장되었습니다'
+        },
+      }[ type ]
+
+      $('#snackbar')[0].MaterialSnackbar.showSnackbar(data);
     },
 
 
@@ -258,6 +304,25 @@ const app = new Vue({
 
 
     /**
+     * 후원하기
+     * @param {String}  id  대상 id
+     * @return {SideEffect}
+     */
+    support( id ){
+      $.ajax({
+        url: '/support',
+        method: 'POST',
+        data: {
+          id
+        }
+      })
+      .done( data => {
+        $('#chat').append( `[ <b>${ this.me.name }</b>님이 후원하였습니다!! ]` )
+      })
+    },
+
+
+    /**
      * 새 작품을 시작한다.
      * @return {SideEffect}
      */
@@ -273,6 +338,88 @@ const app = new Vue({
         location.href = `/${ this.me.id }/${ this.wave.name }`
       })
     },
+
+
+    /**
+     * 작품을 수정한다.
+     * @param {String}  waveName  작품이름
+     * @return {SideEffect}
+     */
+    editWave( waveName ){
+      $.ajax({
+        url: `/${ this.me.id }/${ this.wave.old.name }`,
+        method: 'PUT',
+        data: this.wave
+      })
+      .done( data => {
+        this.getUserInfo( this.user.id, (data) => {
+          this.user = data
+          this.showSnackbar( 'update' )
+          $('dialog')[0].close()
+        })
+      })
+    },
+
+
+    /**
+     * 작품을 저장한다.
+     * @param {String}  waveName  작품이름
+     * @return {SideEffect}
+     */
+    saveWave(){
+      this.wave.live = false;
+
+      $.ajax({
+        url: `/${ this.me.id }/${ this.wave.name }`,
+        method: 'PUT',
+        data: this.wave
+      })
+      .done( data => {
+        this.showSnackbar( 'save' )
+        $('dialog')[0].close()
+        this.go( '/me' )
+      })
+    },
+
+
+    /**
+     * 작품을 삭제한다.
+     * @param {String}  waveName  작품이름
+     * @return {SideEffect}
+     */
+    deleteWave( waveName ){
+      $.ajax({
+        url: `/${ this.me.id }/${ waveName }`,
+        method: 'DELETE',
+      })
+      .done( data => {
+        this.getUserInfo( this.user.id, (data) => {
+          this.user = data
+          this.showSnackbar( 'delete' )
+          $('dialog')[0].close()
+        })
+      })
+    },
+
+
+    /**
+     * 유저 삭제
+     * @param {String}  id  유저id
+     * @return {SideEffect}
+     */
+    deleteUser(){
+      $.ajax({
+        url: `/${ this.user.id }`,
+        method: 'DELETE',
+      })
+      .done( data => {
+        $('dialog')[0].close()
+        this.showSnackbar( 'delete' )
+        this.go( '/' )
+      })
+    },
+
+
   },
 
 })
