@@ -21,10 +21,7 @@ const app = new Vue({
     page: '/intro',
 
     // 내 정보
-    me: {
-      id: 'guest',
-      name: 'guest'
-    },
+    me: {},
 
     // 유저정보
     user: {},
@@ -122,6 +119,7 @@ const app = new Vue({
             $.ajax( path )
             .done( data => {
               this.wave = data
+              socketClient( app.me.name, data.name )
             })
           }
         break;
@@ -299,9 +297,5 @@ app.getMyInfo( (data, err) => {
   }
   else{
     app.go( '/intro' )
-  }
-
-  if( app.page == '/wave' ){
-    socketClient( 'yo' )
   }
 })

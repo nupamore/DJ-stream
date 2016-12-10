@@ -23,6 +23,8 @@ const drawMixer = () => {
   let leftLevel
   let rightLevel
   let mixLevel
+  let playL
+  let playR
 
   function setup() {
     noCursor()
@@ -55,7 +57,10 @@ const drawMixer = () => {
     //리턴되는 level값들 초기화
     leftLevel = PI-PI/9
     rightLevel = PI-PI/9
-    mixLevel = mixX
+    mixLevel = 0
+
+    playL = 'none'
+    playR = 'none'
   }
 
   function draw() {
@@ -69,6 +74,9 @@ const drawMixer = () => {
     //디스크판
     drawDisk( diskLx, diskLy, imgL, 'left' )
     drawDisk( diskRx, diskRy, imgR, 'right' )
+    //console.log(playL)
+
+
 
     //왼쪽동그라미
     fill( 150 )
@@ -151,11 +159,11 @@ const drawMixer = () => {
     rect( width*0.5, height*0.85, width*0.16, height*0.01)
     //스위치
     fill( 255 )
-    rect( mixLevel, mixY, width*0.025, height*0.1 )
+    rect( mixLevel*(width/14)+width*0.5, mixY, width*0.025, height*0.1 )
     if( mixer.getDJ() && mouseIsPressed && (mouseX > width*0.4) && (mouseX < width*0.6) && (mouseY > height*0.75) && (mouseY < height*0.95)){
       mixX += mouseX-pmouseX
       mixX = constrain( mixX, width*0.43, width*0.57 )
-      client.setMix( mixX )
+      client.setMix( (mixX-width*0.5)/width*14 )
     }
     // 커서위치
     fill(255)
@@ -206,9 +214,16 @@ const drawMixer = () => {
 
     if( !(mixer.getDJ() && clickedL) ){
       ringL += speedL
+      playL = 'play'
+    }
+    else{
+      client.setPlayL ( 'pause' )
     }
     if( !(mixer.getDJ() && clickedR) ){
       ringR += speedR
+    }
+    else{
+      client.setPlayR ( 'pause' )
     }
   }
 
@@ -222,6 +237,8 @@ const drawMixer = () => {
       mixLevel = levels.mix
       leftLevel = levels.left
       rightLevel = levels.right
+      playL = levels.playL
+      playR = levels.playR
     },
     getDJ(){
       return app.wave.dj == app.me.id
