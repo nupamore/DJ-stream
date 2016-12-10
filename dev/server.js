@@ -38,7 +38,7 @@ app.use( (req, res, next) => {
     next()
   }
   // ajax 요청이 아닐 경우 html 전달
-  else if( !req.get('X-Requested-With') ){
+  else if( !req.get('X-Requested-With') && req.method == 'GET' ){
     res.render( `${ __dirname }/view/index.ejs`, {
       user: req.user
     })
@@ -53,6 +53,7 @@ app.use( require('./router/login.js') )
 app.use( require('./router/follow.js') )
 app.use( require('./router/support.js') )
 app.use( require('./router/search.js') )
+app.use( require('./router/upload.js') )
 app.use( require('./router/user.js') )
 app.use( require('./router/wave.js') )
 

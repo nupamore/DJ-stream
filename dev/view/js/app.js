@@ -121,7 +121,7 @@ const app = new Vue({
               if( err ){
                 console.log( err )
               }
-              
+
               $.ajax( path )
               .done( data => {
                 this.wave = data
@@ -212,6 +212,28 @@ const app = new Vue({
 
 
     /**
+     * 파일을 업로드한다
+     * @param {String}  type  종류
+     * @return {SideEffect}
+     */
+    upload( type ){
+      const ajax = $('#myImg').ajaxForm({
+        dataType: 'json',
+        beforeSend(){
+          console.log('upload')
+        },
+        complete( data ){
+          console.log('complete')
+        }
+      })
+
+      $('#myImg > input[type="file"]')
+      .change( e => ajax.submit() )
+      .trigger('click')
+    },
+
+
+    /**
      * 다이얼로그를 띄운다.
      * @param {String}  type  종류
      * @param {Object}  params
@@ -270,7 +292,6 @@ const app = new Vue({
 
     /**
      * 로그아웃
-     * @param {String}  type  종류
      * @return {SideEffect}
      */
     logout(){

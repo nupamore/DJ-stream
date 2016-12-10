@@ -23,7 +23,10 @@
 <section id="join" class="slide">
   <div>
     <div class="content">
-      <img src="/img/user.png" class="img-icon">
+      <form id="myImg" action="/upload" method="post" enctype="multipart/form-data" style="display:none">
+        <input type="file" name="file">
+      </form>
+      <img src="/img/user.png" class="img-icon" @click=" upload('userImg') ">
 
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" pattern="[ㄱ-힣A-Za-z0-9\-_]*" id="nickname" v-model=" me.name ">
