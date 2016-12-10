@@ -21,7 +21,9 @@ const app = new Vue({
     page: '/intro',
 
     // 내 정보
-    me: {},
+    me: {
+      name: 'guest'
+    },
 
     // 유저정보
     user: {},
@@ -34,6 +36,7 @@ const app = new Vue({
       id: '',
       name: '',
       desc: '',
+      img: ''
     },
 
     // 검색키워드
@@ -204,7 +207,8 @@ const app = new Vue({
         url: `/${ this.me.id }`,
         method: 'PUT',
         data: {
-          name: this.me.name
+          name: this.me.name,
+          img: this.me.img
         }
       })
       .done( data => this.go(`/${ this.me.id }`) )
@@ -217,17 +221,31 @@ const app = new Vue({
      * @return {SideEffect}
      */
     upload( type ){
-      const ajax = $('#myImg').ajaxForm({
+      const ajax = $(`#${ type }-form`).ajaxForm({
         dataType: 'json',
+        data: {
+          type
+        },
         beforeSend(){
-          console.log('upload')
+          console.log('upload start')
         },
         complete( data ){
-          console.log('complete')
+          const filename = data.responseJSON.filename
+
+          switch( type ){
+            case 'userImg':
+              app.me.img = `/files/${ filename }`
+            break;
+
+            case 'waveImg':
+              app.wave.img = `/files/${ filename }`
+            break;
+          }
         }
       })
 
-      $('#myImg > input[type="file"]')
+      $(`#${ type }-form > input[type="file"]`)
+      .off('change')
       .change( e => ajax.submit() )
       .trigger('click')
     },
@@ -252,8 +270,8 @@ const app = new Vue({
           this.wave = params
           this.wave.old = {
             name: params.name,
-            desc: params.name,
-            img: params.name,
+            desc: params.desc,
+            img: params.img,
           }
         break;
 
@@ -358,7 +376,8 @@ const app = new Vue({
         url: `/${ this.me.id }/${ this.wave.name }`,
         method: 'POST',
         data: {
-          desc: this.wave.desc
+          desc: this.wave.desc,
+          img: this.wave.img
         }
       })
       .done( data => {
