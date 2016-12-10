@@ -4,10 +4,10 @@
   <div class="mdl-cell mdl-cell--12-col">
     <h6>
       <div class="right-button">
-        <button v-if=" me.id == wave.dj && wave.live " @click=" saveWave() " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+        <button v-if=" me.id == wave.dj && wave.live " @click=" showDialog('saveWave') " class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
           방송 종료
         </button>
-        <button v-if=" me.id != wave.dj " @click=" support( wave.dj ) " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+        <button v-if=" me.id != wave.dj " @click=" support( wave.dj ) " class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
           후원하기
         </button>
       </div>

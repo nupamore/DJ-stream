@@ -13,7 +13,7 @@ router.use(bodyParser.urlencoded({ extended: false }))
 const query = {
   //사용자 기본 정보 조회
   myInfo : `
-    SELECT USER_ID, USER_NICKNAME, USER_IMG, DATE_FORMAT(USER_DT, '%Y/%m/%d') USER_DT
+    SELECT USER_ID, USER_NICKNAME, USER_IMG, USER_TYPE, DATE_FORMAT(USER_DT, '%Y/%m/%d') USER_DT
     FROM USER
     WHERE USER_ID = ?; `,
   //나를 팔로우한 사용자 조회
@@ -54,6 +54,10 @@ const query = {
   updateUser : `
     UPDATE USER
     SET USER_NICKNAME = ?
+    WHERE USER_ID = ?`,
+  //사용자 삭제
+  deleteUser : `
+    DELETE FROM USER
     WHERE USER_ID = ?`,
 }
 
@@ -110,6 +114,7 @@ router.get( '/:userId', (req, res) => {
           id : info.USER_ID,
           name : info.USER_NICKNAME,
           img : info.USER_IMG,
+          type : info.USER_TYPE,
           dt : info.USER_DT,
           follower : follower.map( x => ({
             name : x.myfollower
@@ -150,6 +155,21 @@ router.put( '/:userId', (req, res) => {
 
   const connection = mysql.createConnection( db.connectionInfo )
   connection.query( query.updateUser, [name, id], ( err, results ) => {
+    if(err){
+      console.log(err)
+      res.sendStatus(400)
+    }
+    else{
+      res.sendStatus(200)
+    }
+  })
+})
+
+router.delete( '/:userId', (req, res) => {
+  const id = req.params.userId
+
+  const connection = mysql.createConnection( db.connectionInfo )
+  connection.query( query.deleteUser, [id], ( err, results ) => {
     if(err){
       console.log(err)
       res.sendStatus(400)

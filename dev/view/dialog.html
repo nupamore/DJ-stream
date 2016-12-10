@@ -25,14 +25,27 @@
     </div>
   </form>
 
-  <form v-if=" dialog == 'deleteWave' ">
+  <form v-if=" dialog == 'deleteWave' || dialog == 'deleteUser' ">
     <div class="mdl-dialog__content">
       <p>
         정말 삭제하시겠습니까?
       </p>
     </div>
     <div class="mdl-dialog__actions">
-      <button type="button" class="mdl-button" @click=" deleteWave( wave.name ) ">삭제</button>
+      <button type="button" class="mdl-button" @click=" deleteUser() " v-if=" dialog == 'deleteUser' ">삭제</button>
+      <button type="button" class="mdl-button" @click=" deleteWave( wave.name ) " v-if=" dialog == 'deleteWave' ">삭제</button>
+      <button type="button" class="mdl-button close" @click=" $('dialog')[0].close() ">취소</button>
+    </div>
+  </form>
+
+  <form v-if=" dialog == 'saveWave' ">
+    <div class="mdl-dialog__content">
+      <p>
+        라이브를 종료하고 저장하시겠습니까?
+      </p>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button" @click=" saveWave() ">저장</button>
       <button type="button" class="mdl-button close" @click=" $('dialog')[0].close() ">취소</button>
     </div>
   </form>
@@ -40,3 +53,11 @@
 
 </dialog>
 <!-- end dialog -->
+
+
+<!-- snackbar -->
+<div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
+  <div class="mdl-snackbar__text"></div>
+  <button class="mdl-snackbar__action" type="button"></button>
+</div>
+<!-- end snackbar -->

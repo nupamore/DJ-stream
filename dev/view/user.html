@@ -9,24 +9,25 @@
     <div class="mdl-card__title card-img mdl-card--expand" :style=" `background-image: url(${ user.img })` "></div>
   </div>
   <div class="mdl-cell mdl-cell--7-col mdl-cell--3-col-tablet mdl-cell--2-col-phone">
-    <div class="right-button" v-if=" me.id != user.id ">
 
-      <button v-if=" me.id == user.id " @click=" go( '/join' ) " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-        정보 수정
-      </button>
-      <button v-if=" !me.following || !me.following.filter( _ => _.id == user.id).length " @click=" follow( user.id, true ) " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+    <div class="right-button" v-if=" me.id != user.id ">
+      <button v-if=" !me.following || !me.following.filter( _ => _.id == user.id).length " @click=" follow( user.id, true ) " class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
         팔로우
       </button>
-      <button v-if=" me.following && me.following.filter( _ => _.id == user.id).length "@click=" follow( user.id, false ) " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+      <button v-if=" me.following && me.following.filter( _ => _.id == user.id).length "@click=" follow( user.id, false ) " class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
         언팔로우
       </button>
-
+      <button v-if=" me.type == 'admin' " @click=" showDialog( 'deleteUser' ) " class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+        사용자 삭제
+      </button>
     </div>
+
     <div class="right-button" v-if=" me.id == user.id ">
-      <button v-if=" me.id == user.id " @click=" go( '/join' ) " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+      <button v-if=" me.id == user.id " @click=" go( '/join' ) " class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
         정보 수정
       </button>
     </div>
+
     <div class="mdl-card__title-text search-title">
       {{ user.name }}
     </div>
@@ -108,7 +109,7 @@
 
   <div class="mdl-cell mdl-cell--12-col">
     <div class="right-button" v-if=" me.id == user.id ">
-      <button @click=" showDialog('createWave') " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+      <button @click=" showDialog('createWave') " class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
         새 작품
       </button>
     </div>
@@ -140,7 +141,7 @@
           </div>
         </div>
 
-        <div class="waves-menu">
+        <div class="waves-menu" v-if=" me.id == user.id && me.type == 'admin' ">
           <i class="material-icons" @click=" showDialog( 'editWave', wave ) ">mode_edit</i>
           <i class="material-icons" @click=" showDialog( 'deleteWave', wave ) ">close</i>
         </div>

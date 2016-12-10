@@ -51,6 +51,7 @@ router.get( '/:userId/:waveName', (req, res) => {
         name: x.WAVE_NAME,
         desc: x.WAVE_DESC,
         live: x.WAVE_LIVE,
+        old: {}
       }))[0]
       res.send( wave )
     }

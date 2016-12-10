@@ -242,6 +242,29 @@ const app = new Vue({
 
 
     /**
+     * 스낵바를 띄운다.
+     * @param {String}  type  종류
+     * @param {Object}  params
+     * @return {SideEffect}
+     */
+    showSnackbar( type, params ){
+      const data = {
+        'update': {
+          message: '변경되었습니다'
+        },
+        'delete': {
+          message: '삭제되었습니다'
+        },
+        'save': {
+          message: '저장되었습니다'
+        },
+      }[ type ]
+
+      $('#snackbar')[0].MaterialSnackbar.showSnackbar(data);
+    },
+
+
+    /**
      * 로그아웃
      * @param {String}  type  종류
      * @return {SideEffect}
@@ -333,6 +356,7 @@ const app = new Vue({
       .done( data => {
         this.getUserInfo( this.user.id, (data) => {
           this.user = data
+          this.showSnackbar( 'update' )
           $('dialog')[0].close()
         })
       })
@@ -353,6 +377,8 @@ const app = new Vue({
         data: this.wave
       })
       .done( data => {
+        this.showSnackbar( 'save' )
+        $('dialog')[0].close()
         this.go( '/me' )
       })
     },
@@ -371,10 +397,31 @@ const app = new Vue({
       .done( data => {
         this.getUserInfo( this.user.id, (data) => {
           this.user = data
+          this.showSnackbar( 'delete' )
           $('dialog')[0].close()
         })
       })
     },
+
+
+    /**
+     * 유저 삭제
+     * @param {String}  id  유저id
+     * @return {SideEffect}
+     */
+    deleteUser(){
+      $.ajax({
+        url: `/${ this.user.id }`,
+        method: 'DELETE',
+      })
+      .done( data => {
+        $('dialog')[0].close()
+        this.showSnackbar( 'delete' )
+        this.go( '/' )
+      })
+    },
+
+
   },
 
 })
