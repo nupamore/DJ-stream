@@ -141,7 +141,7 @@
           </div>
         </div>
 
-        <div class="waves-menu" v-if=" me.id == user.id && me.type == 'admin' ">
+        <div class="waves-menu" v-if=" me.id == user.id || me.type == 'admin' ">
           <i class="material-icons" @click=" showDialog( 'editWave', wave ) ">mode_edit</i>
           <i class="material-icons" @click=" showDialog( 'deleteWave', wave ) ">close</i>
         </div>
