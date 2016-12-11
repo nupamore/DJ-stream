@@ -151,11 +151,20 @@ const drawMixer = () => {
     rect( width*0.43, height*0.53, width*0.042, height*0.35 )
     fill( 0 )
     rect( width*0.43, height*0.53, width*0.035, height*0.33 )
+    CL = (mouseX>width*0.4)&&(mouseX<width*0.46)&&(mouseY>height*0.35)&&(mouseY>height*0.71)
+    if( mixer.getDJ() && mouseIsPressed && CL ){
+      console.log('호에르왼쪽')
+    }
+
     //오른쪽 이퀄라이저
     fill( 150 )
     rect( width*0.57, height*0.53, width*0.042, height*0.35 )
     fill( 0 )
     rect( width*0.57, height*0.53, width*0.035, height*0.33 )
+    CR = (mouseX>width*0.54)&&(mouseX<width*0.6)&&(mouseY>height*0.35)&&(mouseY>height*0.71)
+    if( mixer.getDJ() && mouseIsPressed && CR ){
+      console.log('호에르오른쪽')
+    }
 
     //가운데큰거
     fill( 0 )
@@ -221,24 +230,32 @@ const drawMixer = () => {
       if( !clickedL ){
         ringL += speedL
         leftDisk = 'play'
-        client.setPlayL( leftDisk )
+        if( frameCount%10 == 0 ){
+          client.setPlayL( leftDisk )
+        }
         sound.L.play()
       }
       else if ( clickedL ){
         leftDisk = 'pause'
-        client.setPlayL( leftDisk )
+        if( frameCount%10 == 0 ){
+          client.setPlayL( leftDisk )
+        }
         sound.L.pause()
       }
 
       if( !clickedR ){
         ringR += speedR
         rightDisk = 'play'
-        client.setPlayR( rightDisk )
+        if( frameCount%10 == 0 ){
+          client.setPlayR( rightDisk )
+        }
         sound.R.play()
       }
       else {
         rightDisk = 'pause'
-        client.setPlayR( rightDisk )
+        if( frameCount%10 == 0 ){
+          client.setPlayR( rightDisk )
+        }
         sound.R.pause()
       }
     }
