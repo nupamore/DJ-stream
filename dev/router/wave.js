@@ -3,6 +3,7 @@
 const express = require('express')
 const bodyParser = require('body-parser');
 const mysql = require('mysql')
+const fs = require('fs')
 const db = require('../custom_modules/db.js')
 
 
@@ -19,11 +20,11 @@ const query = {
   // 작품 생성
   createWave : `
     INSERT INTO WAVE ( WAVE_DJ, WAVE_NAME, WAVE_DESC, WAVE_LIVE, WAVE_IMG, WAVE_DT )
-    VALUES ( ?, ?, ?, TRUE, '/img/logo.png', NOW());`,
+    VALUES ( ?, ?, ?, TRUE, ?, NOW());`,
   // 작품 수정
   updateWave : `
     UPDATE WAVE
-    SET WAVE_NAME = ?, WAVE_DESC = ?, WAVE_LIVE = ?
+    SET WAVE_NAME = ?, WAVE_DESC = ?, WAVE_LIVE = ?, WAVE_IMG = ?
     WHERE WAVE_DJ = ?
       AND WAVE_NAME = ?`,
   // 작품 삭제
@@ -62,9 +63,10 @@ router.post( '/:userId/:waveName', (req, res) => {
   const dj = req.params.userId
   const name = req.params.waveName
   const desc = req.body.desc
+  const img = req.body.img
 
   const connection = mysql.createConnection( db.connectionInfo )
-  connection.query( query.createWave, [dj, name, desc], ( err, result ) => {
+  connection.query( query.createWave, [dj, name, desc, img], ( err, result ) => {
     if( err ) {
       console.log(err)
       res.sendStatus( 400 )
@@ -82,9 +84,10 @@ router.put( '/:userId/:waveName', (req, res) => {
   const newName = req.body.name || req.body.old.name
   const desc = req.body.desc || req.body.old.desc
   const live = req.body.live || req.body.old.live
+  const img = req.body.img || req.body.old.img
 
   const connection = mysql.createConnection( db.connectionInfo )
-  connection.query( query.updateWave, [newName, desc, live, dj, oldName], ( err, result ) => {
+  connection.query( query.updateWave, [newName, desc, live, img, dj, oldName], ( err, result ) => {
     if( err ) {
       console.log(err)
       res.sendStatus( 400 )

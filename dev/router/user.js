@@ -53,7 +53,7 @@ const query = {
   //내 정보 수정
   updateUser : `
     UPDATE USER
-    SET USER_NICKNAME = ?
+    SET USER_NICKNAME = ?, USER_IMG = ?
     WHERE USER_ID = ?`,
   //사용자 삭제
   deleteUser : `
@@ -152,9 +152,10 @@ router.get( '/:userId', (req, res) => {
 router.put( '/:userId', (req, res) => {
   const id = req.session.passport.user.id
   const name = req.body.name
+  const img = req.body.img
 
   const connection = mysql.createConnection( db.connectionInfo )
-  connection.query( query.updateUser, [name, id], ( err, results ) => {
+  connection.query( query.updateUser, [name, img, id], ( err, results ) => {
     if(err){
       console.log(err)
       res.sendStatus(400)
