@@ -23,10 +23,14 @@ const drawMixer = () => {
   let leftLevel
   let rightLevel
   let mixLevel
+
+  let leftDisk
+  let rightDisk
   let playL
   let playR
 
   function setup() {
+    frameRate( 30 )
     noCursor()
     const canvas = createCanvas( 900, 400 )
     canvas.parent('mixer')
@@ -61,6 +65,8 @@ const drawMixer = () => {
 
     playL = 'none'
     playR = 'none'
+    leftDisk = 'none'
+    rightDisk = 'none'
   }
 
   function draw() {
@@ -74,7 +80,7 @@ const drawMixer = () => {
     //디스크판
     drawDisk( diskLx, diskLy, imgL, 'left' )
     drawDisk( diskRx, diskRy, imgR, 'right' )
-    //console.log(playL)
+    console.log(playL)
 
 
 
@@ -211,19 +217,51 @@ const drawMixer = () => {
 
     const clickedL = mouseIsPressed && dist(diskLx, diskLy, mouseX, mouseY) < height*0.3
     const clickedR = mouseIsPressed && dist(diskRx, diskRy, mouseX, mouseY) < height*0.3
+    if( mixer.getDJ() && window.client ){
+      if( !clickedL ){
+        ringL += speedL
+        leftDisk = 'play'
+        client.setPlayL( leftDisk )
+        sound.L.play()
+      }
+      else if ( clickedL ){
+        leftDisk = 'pause'
+        client.setPlayL( leftDisk )
+        sound.L.pause()
+      }
 
-    if( !(mixer.getDJ() && clickedL) ){
-      ringL += speedL
-      playL = 'play'
+      if( !clickedR ){
+        ringR += speedR
+        rightDisk = 'play'
+        client.setPlayR( rightDisk )
+        sound.R.play()
+      }
+      else {
+        rightDisk = 'pause'
+        client.setPlayR( rightDisk )
+        sound.R.pause()
+      }
     }
+
     else{
-      client.setPlayL ( 'pause' )
-    }
-    if( !(mixer.getDJ() && clickedR) ){
-      ringR += speedR
-    }
-    else{
-      client.setPlayR ( 'pause' )
+      switch( playL ){
+        case 'play' :
+          ringL += speedL
+          sound.L.play()
+
+          break
+        case 'pause' :
+          sound.L.pause()
+          break
+      }
+      switch ( playR ) {
+        case 'play':
+          ringR += speedR
+          break
+        case 'pause' :
+          sound.L.pause()
+          break
+     }
     }
   }
 
