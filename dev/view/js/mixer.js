@@ -59,8 +59,8 @@ const drawMixer = () => {
     mixY = height*0.85
 
     //리턴되는 level값들 초기화
-    leftLevel = volL
-    rightLevel = volR
+    leftLevel = 1
+    rightLevel = 1
     mixLevel = 0
 
     playL = 'none'
@@ -158,6 +158,10 @@ const drawMixer = () => {
     rect( width*0.43, height*0.53, width*0.042, height*0.35 )
     fill( 0 )
     rect( width*0.43, height*0.53, width*0.035, height*0.33 )
+    rectMode( CORNERS )
+    fill( 255, 131, 47 )
+    rect( width*0.4125, height*0.695, width*0.4475, volL)
+    rectMode( CENTER )
     fill( 250 )
     rect( width*0.43, height*0.68-leftLevel*(height/3.3), width*0.035, height*0.03 )
     const CL = (mouseX>width*0.4)&&(mouseX<width*0.46)&&(mouseY>height*0.35)&&(mouseY<height*0.71)
@@ -165,18 +169,32 @@ const drawMixer = () => {
         volL += mouseY-pmouseY
         volL = constrain( volL, height*0.38, height*0.68 )
         client.setLeft( (height*0.68-volL)/height*3.3, frameCount )
+        //sound.L.volume = leftLevel
       }
+    if( window.sound ){
       sound.L.volume = leftLevel
+    }
 
     //오른쪽 이퀄라이저
     fill( 150 )
     rect( width*0.57, height*0.53, width*0.042, height*0.35 )
     fill( 0 )
     rect( width*0.57, height*0.53, width*0.035, height*0.33 )
-    rect( width*0.57, height*0.68, width*0.035, height*0.03 )
+    rectMode( CORNERS )
+    fill( 255, 131, 47 )
+    rect( width*0.5525, height*0.695, width*0.5875, volR)
+    rectMode( CENTER )
+    fill( 250 )
+    rect( width*0.57, height*0.68-rightLevel*(height/3.3), width*0.035, height*0.03 )
+
     const CR = (mouseX>width*0.54)&&(mouseX<width*0.6)&&(mouseY>height*0.35)&&(mouseY<height*0.71)
     if( mixer.getDJ() && mouseIsPressed && CR ){
-      //console.log('호에르오른쪽')
+      volR += mouseY-pmouseY
+      volR = constrain( volR, height*0.38, height*0.68 )
+      client.setRight( (height*0.68-volR)/height*3.3, frameCount )
+    }
+    if( window.sound ){
+      sound.R.volume = rightLevel
     }
 
     //가운데큰거
@@ -305,6 +323,7 @@ const drawMixer = () => {
     getLevels( levels ){
       mixLevel = levels.mix
       leftLevel = levels.left
+      sound.L.level = leftLevel
       rightLevel = levels.right
       playL = levels.playL
       playR = levels.playR
