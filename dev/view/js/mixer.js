@@ -52,8 +52,8 @@ const drawMixer = () => {
     //볼륨속도초기화
     speedVol = PI/144
     //볼륨스위치 각도 초기화
-    volL = height*0.68
-    volR = height*0.68
+    volL = height*0.38
+    volR = height*0.38
     //mix스위치 위치변수 초기화
     mixX = width*0.5
     mixY = height*0.85
@@ -161,18 +161,19 @@ const drawMixer = () => {
     fill( 250 )
     rect( width*0.43, height*0.68-leftLevel*(height/3.3), width*0.035, height*0.03 )
     const CL = (mouseX>width*0.4)&&(mouseX<width*0.46)&&(mouseY>height*0.35)&&(mouseY<height*0.71)
-    if( mixer.getDJ() && mouseIsPressed && CL ){
-      volL += mouseY-pmouseY
-      volL = constrain( volL, height*0.38, height*0.68 )
-      client.setLeft( (height*0.68-volL)/height*3.3, frameCount )
-      sound.L.volume = leftLevel
+      if( mixer.getDJ() && mouseIsPressed && CL ){
+        volL += mouseY-pmouseY
+        volL = constrain( volL, height*0.38, height*0.68 )
+        client.setLeft( (height*0.68-volL)/height*3.3, frameCount )
       }
+      sound.L.volume = leftLevel
 
     //오른쪽 이퀄라이저
     fill( 150 )
     rect( width*0.57, height*0.53, width*0.042, height*0.35 )
     fill( 0 )
     rect( width*0.57, height*0.53, width*0.035, height*0.33 )
+    rect( width*0.57, height*0.68, width*0.035, height*0.03 )
     const CR = (mouseX>width*0.54)&&(mouseX<width*0.6)&&(mouseY>height*0.35)&&(mouseY<height*0.71)
     if( mixer.getDJ() && mouseIsPressed && CR ){
       //console.log('호에르오른쪽')
@@ -281,6 +282,7 @@ const drawMixer = () => {
         case 'pause' :
           sound.L.pause()
           break
+        default:
       }
       switch ( playR ) {
         case 'play':

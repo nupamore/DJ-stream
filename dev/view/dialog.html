@@ -9,7 +9,7 @@
           <form id="waveImg-form" action="/upload" method="post" enctype="multipart/form-data" style="visibility:hidden">
             <input type="file" name="file">
           </form>
-          <img id="waveImg" :src=" wave.img || '/img/logo.png' " class="img-responsive" alt="" @click=" upload('waveImg') ">
+          <img id="waveImg" :src=" wave.img " class="img-responsive" alt="" @click=" upload('waveImg') ">
         </div>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
           <input class="mdl-textfield__input" type="text" id="waveName" v-model=" wave.name ">

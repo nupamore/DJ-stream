@@ -36,7 +36,7 @@ const app = new Vue({
       id: '',
       name: '',
       desc: '',
-      img: ''
+      img: '/img/logo.png'
     },
 
     // 검색키워드
@@ -70,7 +70,9 @@ const app = new Vue({
       // 작품 정지
       if( window.client ){
         client.close()
-        remove()
+        if( window.remove ){
+          remove()
+        }
       }
 
       // 햄버거메뉴 숨기기
@@ -134,6 +136,11 @@ const app = new Vue({
               $.ajax( path )
               .done( data => {
                 this.wave = data
+                this.wave.old = {
+                  name: data.name,
+                  desc: data.desc,
+                  img: data.img,
+                }
                 window.sound = {
                   L : new Audio('/files/Drum.mp3'),
                   R : new Audio('/files/Drumless.mp3')

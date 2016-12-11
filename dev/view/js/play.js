@@ -9,14 +9,14 @@ const playWave = ( waveId, eventList ) => {
         return false
       }
       else{
+        const levels = {
+          mix : 0,
+          left : 0,
+          right : 0,
+          playL : 'play',
+          playR : 'play'
+        }
         playList.list[frame].forEach( e => {
-          const levels = {
-            mix : 0,
-            left : 0,
-            right : 0,
-            playL : 'pause',
-            playR : 'pause'
-          }
           switch( e.type ){
             case 'play':
               switch( e.target ){
@@ -38,7 +38,8 @@ const playWave = ( waveId, eventList ) => {
                   break
               }
               break
-            case 'level':
+            case 'volume':
+            //console.log(volume)
               switch( e.target ){
                 case 'right':
                   levels.right = e.value
@@ -52,9 +53,8 @@ const playWave = ( waveId, eventList ) => {
               levels.mix = e.value
               break
           }
-
-          mixer.getLevels( levels )
         })
+        mixer.getLevels( levels )
       }
     }
   }

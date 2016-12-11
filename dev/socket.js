@@ -86,7 +86,7 @@ exports.listen = ( http ) => {
           break
         case 'left':
           target = 'left'
-          type = 'mix'
+          type = 'volume'
           value = level
           levels.left = level
           break
