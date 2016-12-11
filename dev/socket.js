@@ -65,7 +65,8 @@ exports.listen = ( http ) => {
     })
 
     socket.on( 'sendChat', ( comment ) => {
-      connection.query( query.newChat, [socket.userID, socket.waveID, 'comment'], ( err, result ) => {
+      console.log(comment);
+      connection.query( query.newChat, [socket.userID, socket.waveID, comment], ( err, result ) => {
         if( err ) {
           console.log(err)
         }
@@ -128,7 +129,7 @@ exports.listen = ( http ) => {
             value = 0
             type = 'none'
       }
-      console.log(value)
+      console.log(frame)
 
       connection.query( query.newEvent, [ waveID, target, type, value, frame ], ( err, result ) => {
         if( err ) {

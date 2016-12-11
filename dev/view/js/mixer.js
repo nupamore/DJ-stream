@@ -70,6 +70,10 @@ const drawMixer = () => {
   }
 
   function draw() {
+    if( window.playList ){
+      playList.execute( frameCount )
+    }
+
     noStroke()
     rectMode( CENTER )
 
@@ -80,7 +84,7 @@ const drawMixer = () => {
     //디스크판
     drawDisk( diskLx, diskLy, imgL, 'left' )
     drawDisk( diskRx, diskRy, imgR, 'right' )
-    console.log(playL)
+    //console.log(playL)
 
 
 
@@ -161,7 +165,8 @@ const drawMixer = () => {
       volL += mouseY-pmouseY
       volL = constrain( volL, height*0.38, height*0.68 )
       client.setLeft( (height*0.68-volL)/height*3.3, frameCount )
-    }
+      sound.L.volume = leftLevel
+      }
 
     //오른쪽 이퀄라이저
     fill( 150 )
@@ -170,7 +175,7 @@ const drawMixer = () => {
     rect( width*0.57, height*0.53, width*0.035, height*0.33 )
     const CR = (mouseX>width*0.54)&&(mouseX<width*0.6)&&(mouseY>height*0.35)&&(mouseY<height*0.71)
     if( mixer.getDJ() && mouseIsPressed && CR ){
-      console.log('호에르오른쪽')
+      //console.log('호에르오른쪽')
     }
 
     //가운데큰거
@@ -272,7 +277,6 @@ const drawMixer = () => {
         case 'play' :
           ringL += speedL
           sound.L.play()
-
           break
         case 'pause' :
           sound.L.pause()
@@ -281,9 +285,10 @@ const drawMixer = () => {
       switch ( playR ) {
         case 'play':
           ringR += speedR
+          sound.R.play()
           break
         case 'pause' :
-          sound.L.pause()
+          sound.R.pause()
           break
      }
     }
@@ -304,7 +309,7 @@ const drawMixer = () => {
     },
     getDJ(){
       return app.wave.dj == app.me.id
-    }
+    },
   }
 
   window.mixer = mixer

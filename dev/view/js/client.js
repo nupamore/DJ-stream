@@ -60,9 +60,4 @@ var socket = io.connect('http://localhost:65007')
   }
 
   window.client = client
-
-  window.sound = {
-    L : new Audio('/files/Drum.mp3'),
-    R : new Audio('/files/Drumless.mp3')
-  }
 }

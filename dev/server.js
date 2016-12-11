@@ -54,6 +54,7 @@ app.use( require('./router/follow.js') )
 app.use( require('./router/support.js') )
 app.use( require('./router/search.js') )
 app.use( require('./router/upload.js') )
+app.use( require('./router/event.js') )
 app.use( require('./router/user.js') )
 app.use( require('./router/wave.js') )
 

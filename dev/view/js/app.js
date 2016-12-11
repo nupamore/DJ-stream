@@ -134,7 +134,19 @@ const app = new Vue({
               $.ajax( path )
               .done( data => {
                 this.wave = data
-                socketClient( this.wave.name )
+                window.sound = {
+                  L : new Audio('/files/Drum.mp3'),
+                  R : new Audio('/files/Drumless.mp3')
+                }
+                if( this.wave.live ){
+                  socketClient( this.wave.name )
+                }
+                else{
+                  $.ajax( `/event/${ this.wave.id }` )
+                  .done( data => {
+                    playWave( this.wave.name, data )
+                  })
+                }
               })
             })
           }
