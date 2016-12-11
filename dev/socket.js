@@ -42,9 +42,10 @@ exports.listen = ( http ) => {
       io.sockets.in( socket.room ).emit( 'chat', 'SERVER', socket.userName + '님이 입장하셨습니다. ')
       io.sockets.emit( 'updateUser', userNames )
 
-      const connection = mysql.createConnection( db.connectionInfo )
-      connection.query( query.findWave, [ socket.room ], ( err, rows, fields ) => {
-        if( err || !rows ) {
+      const connection1 = mysql.createConnection( db.connectionInfo )
+      connection1.query( query.findWave, [ socket.room ], ( err, rows, fields ) => {
+        connection1.end()
+        if( err || !rows.length ) {
           console.log(err)
         }
         else {
@@ -53,8 +54,10 @@ exports.listen = ( http ) => {
           console.log(socket.waveID)
         }
       })
-      connection.query( query.findUser, [ socket.userName ], ( err, rows, fields ) => {
-        if( err || !rows ) {
+      const connection2 = mysql.createConnection( db.connectionInfo )
+      connection2.query( query.findUser, [ socket.userName ], ( err, rows, fields ) => {
+        connection2.end()
+        if( err || !rows.length ) {
           console.log(err)
         }
         else {
@@ -66,6 +69,7 @@ exports.listen = ( http ) => {
     socket.on( 'sendChat', ( comment ) => {
       const connection = mysql.createConnection( db.connectionInfo )
       connection.query( query.newChat, [socket.userID, socket.waveID, 'comment'], ( err, result ) => {
+        connection.end()
         if( err ) {
           console.log(err)
         }
@@ -132,6 +136,7 @@ exports.listen = ( http ) => {
 
       const connection = mysql.createConnection( db.connectionInfo )
       connection.query( query.newEvent, [ waveID, target, type, value, socket.waveDT ], ( err, result ) => {
+        connection.end()
         if( err ) {
           console.log(err)
         }
