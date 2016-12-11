@@ -1,5 +1,5 @@
 const socketClient = ( waveId ) => {
-  
+
 var socket = io.connect('http://localhost:65007')
   socket.on( 'connect', () =>  {
     //socket.emit('addUser', prompt( '이름을 입력해주세염 ' ), waveId );
@@ -39,21 +39,24 @@ var socket = io.connect('http://localhost:65007')
 
 
   const client = {
-    setMix( level ){
-      socket.emit( 'setLevels', 'mix', level )
+    setMix( level, frame ){
+      socket.emit( 'setLevels', 'mix', level, frame )
     },
-    setLeft( level ){
-      socket.emit( 'setLevels', 'left', level )
+    setLeft( level, frame ){
+      socket.emit( 'setLevels', 'left', level, frame )
     },
-    setRight( level ){
-      socket.emit( 'setLevels', 'right', level)
+    setRight( level, frame ){
+      socket.emit( 'setLevels', 'right', level, frame )
     },
-    setPlayL( level ){
-      socket.emit( 'setLevels', 'playL', level)
+    setPlayL( level, frame ){
+      socket.emit( 'setLevels', 'playL', level, frame )
     },
-    setPlayR( level ){
-      socket.emit( 'setLevels', 'playR', level)
-    }
+    setPlayR( level, frame ){
+      socket.emit( 'setLevels', 'playR', level, frame )
+    },
+    close(){
+      socket.disconnect()
+    },
   }
 
   window.client = client

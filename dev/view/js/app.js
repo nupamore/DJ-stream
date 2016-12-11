@@ -67,6 +67,12 @@ const app = new Vue({
         history.replaceState( page, '', path )
       }
 
+      // 작품 정지
+      if( window.client ){
+        client.close()
+        remove()
+      }
+
       // 햄버거메뉴 숨기기
       $( '.mdl-layout__drawer' ).removeClass( 'is-visible' );
       $( '.mdl-layout__obfuscator' ).removeClass( 'is-visible' );

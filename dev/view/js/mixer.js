@@ -52,15 +52,15 @@ const drawMixer = () => {
     //볼륨속도초기화
     speedVol = PI/144
     //볼륨스위치 각도 초기화
-    volL = PI-PI/9
-    volR = PI-PI/9
+    volL = height*0.68
+    volR = height*0.68
     //mix스위치 위치변수 초기화
     mixX = width*0.5
     mixY = height*0.85
 
     //리턴되는 level값들 초기화
-    leftLevel = PI-PI/9
-    rightLevel = PI-PI/9
+    leftLevel = volL
+    rightLevel = volR
     mixLevel = 0
 
     playL = 'none'
@@ -90,6 +90,7 @@ const drawMixer = () => {
     fill( 250 )
     ellipse( width*0.43, height*0.22, height*0.13, height*0.13 )
 
+    /*
     if( mixer.getDJ() && mouseIsPressed && (dist(width*0.43, height*0.13, mouseX, mouseY) < width*0.075)){
       let deltaY = pmouseY - mouseY
       if( mouseX > width*0.43 ){
@@ -104,11 +105,12 @@ const drawMixer = () => {
       }
       volL = constrain( volL, PI-PI/9, PI+PI/3 )
       //leftLevel = degrees(volL) - 160
-      client.setLeft( volL )
+      client.setLeft( volL, frameCount )
     }
+    */
     push()
     translate( width*0.43, height*0.22 )
-    rotate( leftLevel%2*PI )
+  //  rotate( leftLevel%2*PI )
     stroke( 50 )
     strokeWeight( 5 )
     line( height*0.04, 0, height*0.15, 0 )
@@ -120,6 +122,7 @@ const drawMixer = () => {
     ellipse( width*0.57, height*0.22, height*0.15, height*0.15 )
     fill( 250 )
     ellipse( width*0.57, height*0.22, height*0.13, height*0.13 )
+    /*
     if( mixer.getDJ() && mouseIsPressed && (dist(width*0.57, height*0.22, mouseX, mouseY) < width*0.075)){
       let deltaY = pmouseY - mouseY
       if( mouseX > width*0.57 ){
@@ -134,11 +137,11 @@ const drawMixer = () => {
       }
       volR = constrain( volR, PI-PI/9, PI+PI/3 )
       //rightLevel = degrees(volR) - 160
-      client.setRight( volR )
+      client.setRight( volR, frameCount )
     }
+    */
     push()
     translate( width*0.57, height*0.22 )
-    rotate( rightLevel%2*PI )
     stroke( 50 )
     strokeWeight( 5 )
     line( height*0.04, 0, height*0.15, 0 )
@@ -151,9 +154,13 @@ const drawMixer = () => {
     rect( width*0.43, height*0.53, width*0.042, height*0.35 )
     fill( 0 )
     rect( width*0.43, height*0.53, width*0.035, height*0.33 )
-    CL = (mouseX>width*0.4)&&(mouseX<width*0.46)&&(mouseY>height*0.35)&&(mouseY>height*0.71)
+    fill( 250 )
+    rect( width*0.43, height*0.68-leftLevel*(height/3.3), width*0.035, height*0.03 )
+    const CL = (mouseX>width*0.4)&&(mouseX<width*0.46)&&(mouseY>height*0.35)&&(mouseY<height*0.71)
     if( mixer.getDJ() && mouseIsPressed && CL ){
-      console.log('호에르왼쪽')
+      volL += mouseY-pmouseY
+      volL = constrain( volL, height*0.38, height*0.68 )
+      client.setLeft( (height*0.68-volL)/height*3.3, frameCount )
     }
 
     //오른쪽 이퀄라이저
@@ -161,7 +168,7 @@ const drawMixer = () => {
     rect( width*0.57, height*0.53, width*0.042, height*0.35 )
     fill( 0 )
     rect( width*0.57, height*0.53, width*0.035, height*0.33 )
-    CR = (mouseX>width*0.54)&&(mouseX<width*0.6)&&(mouseY>height*0.35)&&(mouseY>height*0.71)
+    const CR = (mouseX>width*0.54)&&(mouseX<width*0.6)&&(mouseY>height*0.35)&&(mouseY<height*0.71)
     if( mixer.getDJ() && mouseIsPressed && CR ){
       console.log('호에르오른쪽')
     }
@@ -178,7 +185,7 @@ const drawMixer = () => {
     if( mixer.getDJ() && mouseIsPressed && (mouseX > width*0.4) && (mouseX < width*0.6) && (mouseY > height*0.75) && (mouseY < height*0.95)){
       mixX += mouseX-pmouseX
       mixX = constrain( mixX, width*0.43, width*0.57 )
-      client.setMix( (mixX-width*0.5)/width*14 )
+      client.setMix( (mixX-width*0.5)/width*14, frameCount )
     }
     // 커서위치
     fill(255)
@@ -231,14 +238,14 @@ const drawMixer = () => {
         ringL += speedL
         leftDisk = 'play'
         if( frameCount%10 == 0 ){
-          client.setPlayL( leftDisk )
+          client.setPlayL( leftDisk, frameCount )
         }
         sound.L.play()
       }
       else if ( clickedL ){
         leftDisk = 'pause'
         if( frameCount%10 == 0 ){
-          client.setPlayL( leftDisk )
+          client.setPlayL( leftDisk, frameCount )
         }
         sound.L.pause()
       }
@@ -247,14 +254,14 @@ const drawMixer = () => {
         ringR += speedR
         rightDisk = 'play'
         if( frameCount%10 == 0 ){
-          client.setPlayR( rightDisk )
+          client.setPlayR( rightDisk, frameCount )
         }
         sound.R.play()
       }
       else {
         rightDisk = 'pause'
         if( frameCount%10 == 0 ){
-          client.setPlayR( rightDisk )
+          client.setPlayR( rightDisk, frameCount )
         }
         sound.R.pause()
       }
